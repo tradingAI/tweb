@@ -1,0 +1,27 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-react"
+    ],
+    "jsRules": {
+    },
+    "rules": {
+        "interface-name": false,
+        "arrow-parens": false,
+        "member-access": false,
+        "jsx-no-multiline-js": false,
+        "jsx-no-lambda": false,
+        "class-name": false,
+        "semicolon": false,
+        "quotemark": [true, "single", "jsx-double"],
+        "max-line-length": false,
+        "object-literal-sort-keys": false
+    },
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": [
+            "src/proto/*"
+        ]
+    }
+}

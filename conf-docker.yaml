@@ -1,0 +1,36 @@
+storage_dir: /tmp/tweb/tweb_storage
+# add endpoints of the tweb frontend to avoid CROS issue.
+cros_allow_origins: [http://localhost:3030]
+# Web配置
+web:
+    port: 8888
+    write_timeout_sec: 10
+    read_timeout_sec: 10
+    read_header_timeout_sec: 10
+    idle_timeout_sec: 10
+    shutdown_wait_sec: 10
+# 数据库配置
+db:
+    host: grandet_db
+    port: 5432
+    username: tweb_test
+    password: tweb_test
+    database: tweb_db
+    reconnect_sec: 3
+    # 是否初始化数据库表,初次启动请设置成true, 会清空所有数据。
+    reset: true
+# 是否创建超管账号,初次启动请设置成true
+create_admin: true
+# 超管账号配置
+admin:
+    username: admin
+    password: admin
+# 备案信息
+record:
+    code: ${RECORD_CODE}
+    url: ${RECORD_URL}
+minio:
+    access_key: ${MINIO_ACCESS_KEY}
+    secret_key: ${MINIO_SECRET_KEY}
+    endpoint: localhost:9000
+    secure: false

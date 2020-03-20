@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  bazel:
+    image: tradingai/bazel:latest
+    command:
+      /bin/bash /root/go/src/github.com/tradingAI/tweb/docker-compose.sh
+    volumes:
+      - .:/root/go/src/github.com/tradingAI/tweb/
+  grandet_db:
+    image: postgres:11.1
+    environment:
+      POSTGRES_PASSWORD: tweb_test
+      POSTGRES_USER: tweb_test
+      POSTGRES_DB: tweb_db
+    container_name: tweb_db
+    ports:
+      - 5432:5432
+    volumes:
+      - /tmp/tweb_db/pgdata:/var/lib/postgresql/data
+  minio:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
+      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    volumes:
+      - /tmp/tweb/minio/data:/data
+    command: ["server", "/data"]
+  tweb:
+    image: mickeyzhoudocker/tweb:latest
+    container_name: tweb_app
+    ports:
+      - 8888:8888
+    depends_on: 
+      - grandet_db
+    restart: always
+    volumes:
+      - ./:/go/src/github.com/SnakeHacker/tweb
+
