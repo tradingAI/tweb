@@ -54,7 +54,7 @@ Tweb支持3种启动方式
 
     在浏览器中输入 [`http://localhost:3030`](http://localhost:3030) 访问  
 
-[![8mY5GD.png](https://s1.ax1x.com/2020/03/12/8mY5GD.png)](https://imgchr.com/i/8mY5GD)
+[![82Xd4H.png](https://s1.ax1x.com/2020/03/20/82Xd4H.png)](https://imgchr.com/i/82Xd4H)
 
 # 相关项目
 - [tbase](https://github.com/tradingAI/tbase)
