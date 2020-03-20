@@ -5,6 +5,8 @@ import Header  from 'components/index/Header';
 import Siderbar from 'components/index/SiderBar';
 import routes from 'components/AppRoute'
 
+import './index.less'
+
 class Index extends React.Component<{}, {}> {
     render() {
         return (
@@ -12,7 +14,7 @@ class Index extends React.Component<{}, {}> {
                 <Header/>
                 <Layout>
                     <Siderbar/>
-                    <Layout style={{ padding: '0 24px 24px' }}>
+                    <Layout className="content">
                         {routes.map((route, i) => (
                             <Route key={i} exact={true} path={route.path} component={route.component}/>
                         ))}

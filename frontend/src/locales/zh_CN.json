@@ -24,6 +24,7 @@
     "create": "创建",
     "update": "更新",
     "confirm": "确定",
+    "upload": "上传",
     "input_username": "请输入用户名",
     "input_password": "请输入密码",
     "emptyUsernameOrPassword": "用户名或密码不能为空",
@@ -33,5 +34,10 @@
     "deleteAccountConfirm": "确定删除账户？",
     "inputTsCode": "输入股票代码",
     "dateRangeIsEmpty": "请选择日期范围",
-    "tsCodeIsEmpty": "请输入股票代码"
+    "tsCodeIsEmpty": "请输入股票代码",
+    "uploadModel": "上传模型",
+    "uploadModelText": "单击或拖动文件到此区域上传",
+    "inputModelName": "请输入模型名称",
+    "inputModelVersion": "请输入模型版本",
+    "inputModelDescription": "请输入模型描述"
 }
