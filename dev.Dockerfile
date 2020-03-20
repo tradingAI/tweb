@@ -1,4 +1,4 @@
-FROM mickeyzhoudocker/devel:latest AS build
+FROM tradingai/bazel:latest AS build
 
 Label maintainer="zmjhacker@gmail.com"
 

@@ -34,11 +34,8 @@ build_darwin: frontend_install proto
 clean:
 	cd main && packr2 clean
 
-build_image:
-	docker build -f dev.Dockerfile --no-cache -t mickeyzhoudocker/tweb:latest .
+build_dev_image:
+	docker build -f dev.Dockerfile --no-cache -t tradingai/tweb_devel:latest .
 
 build_prod_image:
-	docker build -f Dockerfile --no-cache -t mickeyzhoudocker/tweb_prod:latest .
-
-build_base_image:
-	docker build -f base.Dockerfile -t mickeyzhoudocker/devel:latest .
+	docker build -f Dockerfile --no-cache -t tradingai/tweb:latest .
