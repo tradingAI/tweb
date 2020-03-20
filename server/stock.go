@@ -44,9 +44,6 @@ func (s *Server) fetchStockDaily(w http.ResponseWriter, r *http.Request) {
 
 	var resp proto.FetchStockDailyResponse
 
-	glog.Info(tResp.Data.Fields)
-	glog.Info(tResp.Data.Items)
-
 	dailys, err := convertStockDailys(tResp)
 	if err != nil {
 		glog.Error(err)
