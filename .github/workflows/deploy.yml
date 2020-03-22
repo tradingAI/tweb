@@ -27,17 +27,18 @@ jobs:
 
     - name: docker build
       run: make build_prod_image
-
-    – name: docker login
+    
+    - name: docker login
       uses: docker/login-action@v1
       with:
         registry: tradingai/tweb
         username: ${{ DOCKER_USERNAME }}
         password: ${{ DOCKER_PASSWORD }}
     
-    – name: docker push
+    - name: docker push
       uses: docker/push-action@v1
       with:
         registry: tradingai/tweb
         tags: latest
+
 
