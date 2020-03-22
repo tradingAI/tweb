@@ -32,8 +32,8 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: tradingai/tweb
-        username: ${{ DOCKER_USERNAME }}
-        password: ${{ DOCKER_PASSWORD }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
     
     - name: docker push
       uses: docker/push-action@v1
