@@ -1,4 +1,6 @@
 # tweb
+![CI](https://github.com/tradingAI/tweb/workflows/CI/badge.svg?branch=master)  
+
 程序化A股交易 WebUI [Demo](http://tweb.aiminders.com/)
 
 # 环境
