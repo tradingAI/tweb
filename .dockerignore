@@ -1,0 +1,5 @@
+frontend/build
+frontend/node_modules
+main/packrd
+main/server
+main/main-packr.go
