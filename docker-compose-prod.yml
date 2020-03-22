@@ -12,6 +12,16 @@ services:
       - 5432:5432
     volumes:
       - /tmp/tweb_db/pgdata:/var/lib/postgresql/data
+  minio:
+    image: minio/minio:latest
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    volumes:
+      - /tmp/tweb/minio/data:/data
+    command: ["server", "/data"]
   tweb:
     image: mickeyzhoudocker/tweb_prod:latest
     container_name: tweb_app
@@ -22,6 +32,7 @@ services:
       - 8888:8888
     depends_on: 
       - grandet_db
+      - minio
     restart: always
     volumes:
       - ./conf-docker.yaml:/conf.yaml

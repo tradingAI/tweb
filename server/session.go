@@ -12,6 +12,7 @@ import (
 	"github.com/tradingAI/go/utils/random"
 	"github.com/tradingAI/go/utils/web"
 	"github.com/tradingAI/go/utils/werkzeug"
+	"github.com/tradingAI/tweb/common"
 	"github.com/tradingAI/tweb/proto"
 	m "github.com/tradingAI/tweb/server/model"
 )
@@ -75,7 +76,7 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	// insert a session
 	sess := m.Session{
 		Token:     random.StringWithCharset(8, random.CharsetAlphaNumeric),
-		Username:  req.Username,
+		UserID:    int(user.ID),
 		ExpiredAt: time.Now().Add(12 * time.Hour),
 	}
 
@@ -104,6 +105,24 @@ func (s *Server) Logout(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		glog.Error(err)
 		web.InternalError(w, err)
+		return
+	}
+
+	return
+}
+
+func (s *Server) GetSession(r *http.Request) (sess m.Session, err error) {
+	token := r.Header.Get("Access-Token")
+
+	if token == "" {
+		err = common.ErrAccessTokenNotFound
+		glog.Error(err)
+		return
+	}
+
+	err = s.DB.Where("token = ?", token).First(&sess).Error
+	if err != nil {
+		glog.Error(err)
 		return
 	}
 

@@ -39,5 +39,17 @@
     "uploadModelText": "单击或拖动文件到此区域上传",
     "inputModelName": "请输入模型名称",
     "inputModelVersion": "请输入模型版本",
-    "inputModelDescription": "请输入模型描述"
+    "inputModelDescription": "请输入模型描述",
+    "unsupportModelFileType": "上传的模型压缩包必须是zip/tar格式",
+    "modelSizeToLarge": "模型大小不能大于10MB",
+    "onlyUploadOneFile": "每次只能上传一个文件",
+    "uploadSuccess": "上传成功",
+    "uploadFailed": "上传失败",
+    "pleaseAddUploadModel": "请添加待上传的模型",
+    "modelName": "模型:",
+    "modelVersion": "版本:",
+    "modelAuthor": "上传者:",
+    "modelDescription": "描述:",
+    "empty": "空",
+    "deleteModelConfirm": "确定删除模型"
 }

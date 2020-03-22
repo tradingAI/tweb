@@ -53,7 +53,7 @@ func (s *Server) CreateAccount(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.Username == "" || req.Password == "" {
-		err := common.ErrorEmptyAccountUsernameOrPassowrd
+		err := common.ErrEmptyAccountUsernameOrPassowrd
 		glog.Error(err)
 		web.BadRequest(w, err)
 		return

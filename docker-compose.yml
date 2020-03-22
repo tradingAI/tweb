@@ -35,6 +35,7 @@ services:
       - 8888:8888
     depends_on: 
       - grandet_db
+      - minio
     restart: always
     volumes:
       - ./:/go/src/github.com/SnakeHacker/tweb

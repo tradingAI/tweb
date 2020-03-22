@@ -11,7 +11,7 @@ type Session struct {
 	gorm.Model
 	Token     string    `gorm:"column:token; not null" json:"token"`
 	ExpiredAt time.Time `gorm:"column:expired_at; not null" json:"expired_at"`
-	Username  string    `gorm:"column:username; not null" json:"username"`
+	UserID    int       `gorm:"column:user_id; not null" json:"user_id"`
 }
 
 func (Session) TableName() string {

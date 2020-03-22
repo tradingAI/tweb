@@ -9,6 +9,7 @@ type errScope string
 const (
 	errUnknown errScope = ""
 	errConf             = "conf_error"
+	errSession          = "session_error"
 	errDB               = "db_error"
 	errLogin            = "login_error"
 	errAccount          = "account_error"
@@ -25,10 +26,13 @@ var (
 	ErrDBEmptyDatabase = makeError(errDB, "missing Database")
 
 	// Login error
-	ErrorInvalidUsernameOrPassowrd = makeError(errLogin, "invalid username or password")
+	ErrInvalidUsernameOrPassowrd = makeError(errLogin, "invalid username or password")
 
 	// Account error
-	ErrorEmptyAccountUsernameOrPassowrd = makeError(errAccount, "username or password is empty")
+	ErrEmptyAccountUsernameOrPassowrd = makeError(errAccount, "username or password is empty")
+
+	// Session error
+	ErrAccessTokenNotFound = makeError(errSession, "Access-Token not found")
 
 	// Tushare error
 	ErrTushareURL                        = makeError(errTushare, "url is empty.")

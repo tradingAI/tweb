@@ -16,6 +16,82 @@
         align-items: center;
         justify-content: center;
     }
+
+
+    .models_list {
+        background-color: #141414;
+        margin: 20px;
+        color: wheat;
+        font-size: 15px;
+    }
+    .model-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;;
+
+        .model-info{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            width: 80%;
+            .model-name{
+                width: 20%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .model-version{
+                width: 20%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+            }
+    
+            .model-author{
+                width: 20%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .model-description{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .key{
+                color: #FFCC66;
+                padding-right: 10px;
+                font-weight: 700;
+                font-size: 20px;
+            }
+            .value{
+                color: white;
+                font-size: 17px;
+            }
+        }
+
+        .model-options {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+    
+            .option {
+                margin-left: 15px;
+            }
+        }
+    }
+
+    
 }
 
 .upload_model{
@@ -31,4 +107,9 @@
         margin-top: 5px;
         margin-bottom: 5px;
     }
+
+    .progress {
+        width: 100%;
+    }
 }
+

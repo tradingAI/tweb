@@ -50,7 +50,7 @@ func (s *Server) authMiddleware(next http.Handler) http.Handler {
 
 		// fetch user
 		var user m.User
-		err = s.DB.Where("username = ?", sess.Username).First(&user).Error
+		err = s.DB.Where("id = ?", sess.UserID).First(&user).Error
 
 		if err != nil {
 			glog.Error(err)

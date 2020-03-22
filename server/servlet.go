@@ -53,7 +53,7 @@ func New(conf Conf, frontend *packr.Box) (s *Server, err error) {
 
 	// Drop and Recreate db tables
 	if conf.DB.Reset {
-		if err = s.ResetTables(&m.Session{}, &m.User{}); err != nil {
+		if err = s.ResetTables(&m.Session{}, &m.User{}, &m.Model{}); err != nil {
 			glog.Error(err)
 			return
 		}
