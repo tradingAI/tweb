@@ -11,8 +11,7 @@
 Tweb支持3种启动方式
 * ### 1. Docker启动
     请先确保PostgreSQL已部署
-    熟读[`conf-docker.yaml`](conf-docker.yaml)配置，修改DB配置
-    修改
+    熟读[`conf-docker.yaml`](conf-docker.yaml)配置，修改相关配置
     ```
     cd tweb
     make run_docker_prod
