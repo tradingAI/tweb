@@ -61,4 +61,4 @@ Tweb支持3种启动方式
 
 # TODO (mickey)
 - [x] CI
-- [ ] Add test
+- [ ] Add more test
