@@ -1,5 +1,7 @@
 # tweb
-![CI](https://github.com/tradingAI/tweb/workflows/CI/badge.svg?branch=master)  
+![CI](https://github.com/tradingAI/tweb/workflows/CI/badge.svg)
+![Deploy](https://github.com/tradingAI/tweb/workflows/Deploy/badge.svg)
+
 
 程序化A股交易 WebUI [Demo](http://tweb.aiminders.com/)
 
