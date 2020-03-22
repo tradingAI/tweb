@@ -20,7 +20,7 @@ func TestValidate(t *testing.T) {
 	}
 
 	assert.Error(t, common.ErrDBEmptyHost, dbConf.validate())
-	dbConf.Host = "db_host"
+	dbConf.Host = ""
 
 	assert.Error(t, common.ErrDBInvalidPort, dbConf.validate())
 	dbConf.Port = 1025
