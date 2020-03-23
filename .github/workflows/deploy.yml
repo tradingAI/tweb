@@ -20,11 +20,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Run test in docker container
-      run: docker-compose up bazel
-    
-    - name: backup step
-      if: failure()
-      run: exit 1
+      run: docker-compose up bazel --exit-code-from
     
   
   build:
