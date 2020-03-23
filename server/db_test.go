@@ -32,7 +32,7 @@ func TestValidate(t *testing.T) {
 	dbConf.Password = "db_password"
 
 	assert.Equal(t, common.ErrDBEmptyDatabase, dbConf.validate())
-	// dbConf.Database = "db_name"
+	dbConf.Database = "db_name"
 
 	assert.NoError(t, dbConf.validate())
 }
