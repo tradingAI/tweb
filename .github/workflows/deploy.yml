@@ -40,15 +40,4 @@ jobs:
         docker push tradingai/tweb:latest
         docker logout
 
-    - name: ali docker login
-      run:  echo "${{ secrets.ALI_DOCKER_PASSWORD }}" | docker login -u ${{ secrets.ALI_DOCKER_USERNAME }} registry.cn-hangzhou.aliyuncs.com --password-stdin
-
-    - name: ali tag
-      run: docker tag tradingai/tweb:latest registry.cn-hangzhou.aliyuncs.com/tradingai/tweb:latest
-
-    - name: ali docker push-logout
-      run: |
-        docker push registry.cn-hangzhou.aliyuncs.com/tradingai/tweb:latest
-        docker logout registry.cn-hangzhou.aliyuncs.com
-
 
