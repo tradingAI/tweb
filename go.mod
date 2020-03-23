@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/NYTimes/gziphandler v1.1.1
-	github.com/SnakeHacker/tweb v0.0.0-20200319151315-81b12a439e39
 	github.com/gobuffalo/packr/v2 v2.8.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/protobuf v1.3.5

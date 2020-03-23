@@ -38,5 +38,5 @@ services:
       - minio
     restart: always
     volumes:
-      - ./:/go/src/github.com/SnakeHacker/tweb
+      - ./:/go/src/github.com/tradingAI/tweb
 
