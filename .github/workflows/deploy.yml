@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  create:
+    tags:
+      - v.*
+
+jobs:
+  test:
+    runs-on: tweb
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run test in docker container
+      run: docker-compose -f docker-compose.yml up --exit-code-from bazel bazel
+
+  deploy:
+    runs-on: tweb
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # TODO: build image with tag version && deploy
+    - name: docker build
+      run: make build_prod_image
+
+    - name: docker deploy services
+      run: |
+        docker-compose -f docker-compose-prod.yml stop tweb
+        docker-compose -f docker-compose-prod.yml up  tweb
+      env:
+        TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN}}
+        TUSHARE_API: https://api.tushare.pro
+        TWEB_POSTGRES_HOST: ${{ secrets.TWEB_POSTGRES_HOST}}
+        TWEB_POSTGRES_PORT: ${{ secrets.TWEB_POSTGRES_PORT}}
+        TWEB_POSTGRES_RECONNECT_SEC: ${{ secrets.TWEB_POSTGRES_RECONNECT_SEC}}
+        TWEB_POSTGRES_PASSWORD: ${{ secrets.TWEB_POSTGRES_PASSWORD}}
+        TWEB_POSTGRES_USER: ${{ secrets.TWEB_POSTGRES_USER}}
+        TWEB_POSTGRES_DB: ${{ secrets.TWEB_POSTGRES_DB}}
+        TWEB_POSTGRES_RESET: ${{ secrets.TWEB_POSTGRES_RESET}}
+        TWEB_MINIO_ACCESS_KEY: ${{ secrets.TWEB_MINIO_ACCESS_KEY}}
+        TWEB_MINIO_SECRET_KEY: ${{ secrets.TWEB_MINIO_SECRET_KEY}}
+        TWEB_MINIO_HOST: ${{ secrets.TWEB_MINIO_HOST}}
+        TWEB_MINIO_PORT: ${{ secrets.TWEB_MINIO_PORT}}
+        TWEB_MINIO_SECURE: ${{ secrets.TWEB_MINIO_SECURE}}
+        TWEB_RECORD_CODE: ${{ secrets.TWEB_RECORD_CODE}}
+        TWEB_RECORD_URL: ${{ secrets.TWEB_RECORD_URL}}
+        TWEB_CREATE_ADMIN: ${{ secrets.TWEB_CREATE_ADMIN}}
+        TWEB_ADMIN_USERNAME: ${{ secrets.TWEB_ADMIN_USERNAME}}
+        TWEB_ADMIN_PASSWORD: ${{ secrets.TWEB_ADMIN_PASSWORD}}
+        TWEB_PORT: ${{ secrets.TWEB_PORT}}
+        TWEB_CROS_ALLOW_ORIGINS: http://localhost:3030
+        TWEB_STORAGE_DIR: ${{ secrets.TWEB_STORAGE_DIR}}

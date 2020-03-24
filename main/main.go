@@ -8,8 +8,6 @@ import (
 	"github.com/tradingAI/tweb/server"
 )
 
-var confPath = flag.String("c", "", "Path to the conf file")
-
 var frontend = packr.New("frontend", "../frontend/build")
 
 func main() {
@@ -20,13 +18,8 @@ func main() {
 }
 
 func runServer() {
-	if *confPath == "" {
-		flag.Usage()
-		return
-	}
-
 	// load config
-	conf, err := server.LoadConf(*confPath)
+	conf, err := server.LoadConf()
 	if err != nil {
 		glog.Fatal(err)
 	}

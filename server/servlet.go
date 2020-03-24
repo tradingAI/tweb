@@ -32,12 +32,6 @@ type Server struct {
 }
 
 func New(conf Conf, frontend *packr.Box) (s *Server, err error) {
-	// validate conf
-	if err = conf.Validate(); err != nil {
-		glog.Error(err)
-		return
-	}
-
 	// make server
 	s = &Server{
 		Conf:     conf,

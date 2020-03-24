@@ -26,7 +26,7 @@ func (s *Server) fetchStockDaily(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if req.Code == "" {
-		err := common.ErrTushareCodeEmpty
+		err := common.ErrEmptyTushareCode
 		glog.Error(err)
 		web.BadRequest(w, err)
 		return

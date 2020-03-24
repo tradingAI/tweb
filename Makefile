@@ -1,7 +1,5 @@
 .PHONY: proto build_linux build_darwin clean
 
-CONF=$(shell pwd)/conf.yaml
-
 up:
 	docker-compose -f docker-compose.yml up -d grandet_db minio
 
@@ -15,10 +13,10 @@ frontend_install:
 	cd frontend && make install
 
 run:
-	go run main/main.go -c=conf.yaml
+	go run main/main.go
 
 run_docker:
-	docker-compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml up -d grandet_db minio tweb
 
 run_docker_prod:
 	docker-compose -f docker-compose-prod.yml up -d

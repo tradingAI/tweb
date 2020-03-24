@@ -56,7 +56,7 @@ func dailyParams(tsCodes []string, startDate time.Time, endDate time.Time) (para
 	params = make(map[string]string)
 
 	if len(tsCodes) == 0 {
-		err = common.ErrTushareDailyParamsEmpty
+		err = common.ErrEmptyTushareDailyParams
 		glog.Error(err)
 		return
 	}
@@ -120,7 +120,7 @@ func StockDailyHeaderIdx(headers []string) (
 		case STOCK_DAILY_AMOUNT:
 			headerAmountIdx = i
 		default:
-			err = fmt.Errorf("%v, %v", common.ErrTushareDailyFieldsUnknown, header)
+			err = fmt.Errorf("%v, %v", common.ErrUnknownTushareDailyFields, header)
 			glog.Error(err)
 			return
 		}
