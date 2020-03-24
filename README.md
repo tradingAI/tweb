@@ -23,7 +23,7 @@ Tweb支持3种启动方式
     在浏览器中输入 [`http://localhost:8888`](http://localhost:8888) 访问  
 
 * ### 2. 开发环境，通过Docker 编译代码 
-    熟读[`docker-compose.yaml](docker-compose.yaml)，配置环境变量，参考[`.env.example`](.env.example)  
+    熟读[`docker-compose.yaml`](docker-compose.yaml)，配置环境变量，参考[`.env.example`](.env.example)  
     配置`${TUSHARE_TOKEN}`为申请的token值([Tushare Token注册申请](https://tushare.pro/register?reg=238705))  
     ```
     cd tweb
