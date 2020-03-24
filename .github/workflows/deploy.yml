@@ -33,6 +33,7 @@ jobs:
     - name: docker deploy services
       run: |
         docker-compose -f docker-compose-prod.yml stop tweb
+        docker rmi -f tradingai/tweb:latest
         docker-compose -f docker-compose-prod.yml up -d tweb
       env:
         TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN}}
