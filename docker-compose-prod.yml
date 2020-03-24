@@ -24,8 +24,8 @@ services:
       - /tmp/tweb/minio/data:/data
     command: ["server", "/data"]
   tweb:
-    image: mickeyzhoudocker/tweb_prod:latest
-    imagePullPolicy: IfNotPresent
+    image: tradingai/tweb:latest
+    imagePullPolicy: Always
     container_name: tweb_app
     environment:
       TUSHARE_TOKEN: ${TUSHARE_TOKEN}
