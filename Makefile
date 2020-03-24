@@ -19,7 +19,7 @@ run_docker:
 	docker-compose -f docker-compose.yml up -d grandet_db minio tweb
 
 run_docker_prod:
-	docker-compose -f docker-compose-prod.yml up -d
+	docker-compose -f docker-compose-prod.yml up -d tweb
 
 build_linux: frontend_install proto
 	cd frontend && make build_project
