@@ -1,39 +1,23 @@
-version: '3.7'
+version: '3'
 
 services:
-  grandet_db:
-    image: postgres:11.1
-    environment:
-      POSTGRES_PASSWORD: tweb_test
-      POSTGRES_USER: tweb_test
-      POSTGRES_DB: tweb_db
-    container_name: tweb_db
-    ports:
-      - 5432:5432
-    volumes:
-      - /tmp/tweb_db/pgdata:/var/lib/postgresql/data
-  minio:
-    image: minio/minio:latest
-    ports:
-      - 9000:9000
-    environment:
-      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-    volumes:
-      - /tmp/tweb/minio/data:/data
-    command: ["server", "/data"]
   tweb:
-    image: mickeyzhoudocker/tweb_prod:latest
+    image: tradingai/tweb:latest
     container_name: tweb_app
-    environment: 
+    environment:
       TUSHARE_TOKEN: ${TUSHARE_TOKEN}
       TUSHARE_API: https://api.tushare.pro
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      RECORD_CODE: ${RECORD_CODE}
+      RECORD_URL: ${RECORD_URL}
+
     ports:
       - 8888:8888
-    depends_on: 
-      - grandet_db
-      - minio
     restart: always
     volumes:
       - ./conf-docker.yaml:/conf.yaml
-

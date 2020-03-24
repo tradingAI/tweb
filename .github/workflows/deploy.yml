@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  tags:
+    - v.*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run test in docker container
+      run: docker-compose -f docker-compose.yml up --exit-code-from bazel bazel
+
+  deploy:
+    runs-on: tweb
+    needs: test
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: docker build
+      run: make build_prod_image
+
+    - name: docker deploy services
+      run: |
+        docker-compose -f docker-compose-prod.yml stop tweb
+        docker-compose -f docker-compose-prod.yml up  tweb
