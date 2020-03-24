@@ -23,31 +23,31 @@ type DBConf struct {
 
 func (c *DBConf) validate() (err error) {
 	if c.Host == "" {
-		err = common.ErrDBEmptyHost
+		err = common.ErrEmptyDBHost
 		glog.Error(err)
 		return
 	}
 
 	if c.Port <= 1024 || c.Port >= 65535 {
-		err = common.ErrDBInvalidPort
+		err = common.ErrInvalidDBPort
 		glog.Error(err)
 		return
 	}
 
 	if c.Username == "" {
-		err = common.ErrDBEmptyUsername
+		err = common.ErrEmptyDBUsername
 		glog.Error(err)
 		return
 	}
 
 	if c.Password == "" {
-		err = common.ErrDBEmptyPassword
+		err = common.ErrEmptyDBPassword
 		glog.Error(err)
 		return
 	}
 
 	if c.Database == "" {
-		err = common.ErrDBEmptyDatabase
+		err = common.ErrEmptyDBDatabase
 		glog.Error(err)
 		return
 	}

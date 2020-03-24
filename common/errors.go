@@ -18,12 +18,15 @@ const (
 )
 
 var (
+	// Conf error
+	ErrEmptyStorageDir = makeError(errConf, "storage dir is empty")
+	ErrInvalidWebPort  = makeError(errConf, "invalid Port")
 	// DB error
-	ErrDBEmptyUsername = makeError(errDB, "missing Username")
-	ErrDBEmptyPassword = makeError(errDB, "missing Password")
-	ErrDBEmptyHost     = makeError(errDB, "missing Host")
-	ErrDBInvalidPort   = makeError(errDB, "invalid Port")
-	ErrDBEmptyDatabase = makeError(errDB, "missing Database")
+	ErrEmptyDBUsername = makeError(errDB, "missing Username")
+	ErrEmptyDBPassword = makeError(errDB, "missing Password")
+	ErrEmptyDBHost     = makeError(errDB, "missing Host")
+	ErrInvalidDBPort   = makeError(errDB, "invalid Port")
+	ErrEmptyDBDatabase = makeError(errDB, "missing Database")
 
 	// Login error
 	ErrInvalidUsernameOrPassowrd = makeError(errLogin, "invalid username or password")
@@ -37,16 +40,17 @@ var (
 	// Tushare error
 	ErrTushareURL                        = makeError(errTushare, "url is empty.")
 	ErrTushareToken                      = makeError(errTushare, "token is empty.")
-	ErrTushareCodeEmpty                  = makeError(errTushare, "code is empty.")
+	ErrEmptyTushareCode                  = makeError(errTushare, "code is empty.")
 	ErrTushareStockFieldsLen             = makeError(errTushare, "length of stock fields is not equal to headers.")
-	ErrTushareDailyParamsEmpty           = makeError(errTushare, "daily params is empty.")
-	ErrTushareDailyFieldsUnknown         = makeError(errTushare, "unknown daily field.")
-	ErrTushareConceptDetailFieldsUnknown = makeError(errTushare, "unknown concept detail field.")
+	ErrEmptyTushareDailyParams           = makeError(errTushare, "daily params is empty.")
+	ErrUnknownTushareDailyFields         = makeError(errTushare, "unknown daily field.")
+	ErrUnknownTushareConceptDetailFields = makeError(errTushare, "unknown concept detail field.")
 
 	// Minio error
-	ErrMinioAccessKeyEmpty = makeError(errMinio, "access_key is empty")
-	ErrMinioSecretKeyEmpty = makeError(errMinio, "secret_key is empty")
-	ErrMinioEndPointEmpty  = makeError(errMinio, "endpoint is empty")
+	ErrEmptyMinioAccessKey = makeError(errMinio, "access_key is empty")
+	ErrEmptyMinioSecretKey = makeError(errMinio, "secret_key is empty")
+	ErrEmptyMinioHost      = makeError(errMinio, "host is empty")
+	ErrInvalidMinioPort    = makeError(errMinio, "port is invalid")
 )
 
 func makeError(scope errScope, msg ...string) error {

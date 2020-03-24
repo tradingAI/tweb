@@ -29,4 +29,4 @@ ENV PROJECT_PATH=/go/src/github.com/tradingAI/tweb
 
 COPY --from=build ${PROJECT_PATH}/main/server /
 
-ENTRYPOINT ["/server", "-c", "/conf.yaml"]
+ENTRYPOINT ["/server"]

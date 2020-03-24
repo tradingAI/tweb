@@ -1,33 +1,42 @@
 package server
 
 import (
+	"fmt"
+
 	"github.com/golang/glog"
 	"github.com/minio/minio-go/v6"
 	"github.com/tradingAI/tweb/common"
 )
 
 type MinioConf struct {
-	AccessKey string `yaml:"access_key"`
-	SecretKey string `yaml:"secret_key"`
-	EndPoint  string `yaml:"endpoint"`
-	Secure    bool   `yaml:"secure"`
+	AccessKey string
+	SecretKey string
+	Host      string
+	Port      int
+	Secure    bool
 }
 
 func (m MinioConf) validate() (err error) {
 	if m.AccessKey == "" {
-		err = common.ErrMinioAccessKeyEmpty
+		err = common.ErrEmptyMinioAccessKey
 		glog.Error(err)
 		return
 	}
 
 	if m.SecretKey == "" {
-		err = common.ErrMinioSecretKeyEmpty
+		err = common.ErrEmptyMinioSecretKey
 		glog.Error(err)
 		return
 	}
 
-	if m.EndPoint == "" {
-		err = common.ErrMinioEndPointEmpty
+	if m.Host == "" {
+		err = common.ErrEmptyMinioHost
+		glog.Error(err)
+		return
+	}
+
+	if m.Port <= 1024 || m.Port >= 65535 {
+		err = common.ErrInvalidMinioPort
 		glog.Error(err)
 		return
 	}
@@ -37,7 +46,7 @@ func (m MinioConf) validate() (err error) {
 
 func NewMinioClient(conf MinioConf) (client *minio.Client, err error) {
 	client, err = minio.New(
-		conf.EndPoint,
+		fmt.Sprintf("%s:%d", conf.Host, conf.Port),
 		conf.AccessKey,
 		conf.SecretKey,
 		conf.Secure)
