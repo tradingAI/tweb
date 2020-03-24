@@ -24,10 +24,13 @@ jobs:
     needs: test
 
     steps:
-    - name: docker deploy services
+    - name: ali docker login
+      run:  echo "${{ secrets.ALI_DOCKER_PASSWORD }}" | docker login -u ${{ secrets.ALI_DOCKER_USERNAME }} registry.cn-hangzhou.aliyuncs.com --password-stdin
+
+    - name: ali docker deploy services
       run: |
         docker-compose -f docker-compose-prod.yml stop tweb
-        docker pull tradingai/tweb:latest
+        docker pull registry.cn-hangzhou.aliyuncs.com/tradingai/tweb:latest
         docker-compose -f docker-compose-prod.yml up -d tweb
       env:
         TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN}}
