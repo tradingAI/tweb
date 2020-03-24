@@ -21,7 +21,7 @@ run_docker:
 	docker-compose -f docker-compose.yml up -d
 
 run_docker_prod:
-	docker-compose -f docker-compose-prod.yml up -d
+	docker-compose -f docker-compose-init-prod.yml up -d
 
 build_linux: frontend_install proto
 	cd frontend && make build_project
