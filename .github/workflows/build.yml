@@ -19,6 +19,10 @@ jobs:
 
     - name: Run test in docker container
       run: docker-compose -f docker-compose.yml up --exit-code-from bazel bazel
+      env:
+        TWEB_POSTGRES_PORT: 5432
+        TWEB_MINIO_PORT: 9000
+        TWEB_PORT: 8888
 
   build:
     runs-on: ubuntu-latest
