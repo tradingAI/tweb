@@ -1,6 +1,14 @@
 import React from 'react';
 import { Layout, Upload, message, Modal, Input, Button, Progress, List} from 'antd';
-import { UploadOutlined, InboxOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { UploadOutlined,
+    InboxOutlined,
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+    CheckCircleTwoTone,
+    PauseCircleTwoTone,
+    CloseCircleTwoTone,
+    InfoCircleTwoTone,
+    ClockCircleTwoTone} from '@ant-design/icons';
 import BaseComponent from 'components/Base';
 import { UploadModel, CreateModel, FetchModelList, DeleteModel } from 'client/model';
 import { model } from 'proto/model';
@@ -50,7 +58,7 @@ class ModelPage extends BaseComponent<{}, State> {
         if (!this.checkHTTPResult(resp)) {
             return
         }
-
+        console.log(resp)
         this.setState({
             modelList: resp.response?.models || []
         })
@@ -289,6 +297,29 @@ class ModelPage extends BaseComponent<{}, State> {
                                             {item.user.nickname || "Unknown"}
                                         </div>
                                     </div>
+                                    <div className="model-author">
+                                        <div className="key">
+                                            {intl.formatMessage({id: "modelStatus"})}
+                                        </div>
+                                        <div className="value">
+                                            {item.status === undefined ?
+                                            <InfoCircleTwoTone twoToneColor="#C41A1A"/>
+                                            :
+                                            item.status === 1 ?
+                                            <PauseCircleTwoTone />
+                                            :
+                                            item.status === 2 ?
+                                            <ClockCircleTwoTone spin/>
+                                            :
+                                            item.status === 3 ?
+                                            <CheckCircleTwoTone twoToneColor="#52c41a"/>
+                                            :
+                                            <CloseCircleTwoTone twoToneColor="#C41A1A"/>
+                                            }
+                                        </div>
+                                    </div>
+
+
                                     <div className="model-description">
                                         <div className="key">
                                             {intl.formatMessage({id: "modelDescription"})}
@@ -297,9 +328,8 @@ class ModelPage extends BaseComponent<{}, State> {
                                             {item.description || intl.formatMessage({id: "empty"})}
                                         </div>
                                     </div>
-
-                                    
                                 </div>
+
                                 <div className="model-options">
                                     <Button 
                                         danger

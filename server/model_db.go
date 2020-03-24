@@ -2,16 +2,19 @@ package server
 
 import (
 	"github.com/golang/glog"
+	"github.com/tradingAI/tweb/proto"
 	m "github.com/tradingAI/tweb/server/model"
 )
 
-func (s *Server) CreateModel(name, version, description, fileType string, userID int) (modelID int, err error) {
+func (s *Server) CreateModel(name, version, description, fileType string,
+	userID int, status proto.ModelStatus) (modelID int, err error) {
 	model := &m.Model{
 		Name:        name,
 		Version:     version,
 		Description: description,
 		FileType:    fileType,
 		UserID:      userID,
+		Status:      int(status),
 	}
 
 	if err = s.DB.Create(model).Error; err != nil {

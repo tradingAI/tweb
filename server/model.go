@@ -46,6 +46,7 @@ func (s *Server) fetchModels(w http.ResponseWriter, r *http.Request) {
 			Name:        model.Name,
 			Version:     model.Version,
 			Description: model.Description,
+			Status:      proto.ModelStatus(model.Status),
 		}
 
 		var user m.User
@@ -109,7 +110,8 @@ func (s *Server) uploadModelInit(w http.ResponseWriter, r *http.Request) {
 		req.Version,
 		req.Description,
 		req.FileType,
-		sess.UserID)
+		sess.UserID,
+		proto.ModelStatus_CREATED)
 	if err != nil {
 		glog.Error(err)
 		web.InternalError(w, err)
@@ -125,6 +127,24 @@ func (s *Server) uploadModelInit(w http.ResponseWriter, r *http.Request) {
 func (s *Server) uploadModelChunk(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := vars["id"]
+
+	var model m.Model
+	err := s.DB.Where("id = ?", id).Find(&model).Error
+	if err != nil {
+		glog.Error(err)
+		web.InternalError(w, err)
+		return
+	}
+
+	if model.Status != int(proto.ModelStatus_PROCESSING) {
+		model.Status = int(proto.ModelStatus_PROCESSING)
+		err = s.DB.Save(&model).Error
+		if err != nil {
+			glog.Error(err)
+			web.InternalError(w, err)
+			return
+		}
+	}
 
 	file, _, err := r.FormFile("chunk")
 	if err != nil {
@@ -172,10 +192,11 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 	id, _ := vars["id"]
 
 	var req proto.UploadModelCompleteRequest
+	var err error
 
-	if err := web.ReadJSONBody(r.Body, &req); err != nil {
+	err = web.ReadJSONBody(r.Body, &req)
+	if err != nil {
 		glog.Error(err)
-		web.BadRequest(w, err)
 		return
 	}
 
@@ -193,53 +214,73 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 		chunkFileName := fmt.Sprintf("%s_%s", meta.Md5, meta.Index)
 		savePath := s.chunkSavePath(chunkFileName)
 		if !io2.DoesFileExist(savePath) {
-			err := fmt.Errorf("file [%s] is not existed", savePath)
+			err = fmt.Errorf("file [%s] is not existed", savePath)
 			glog.Error(err)
-			web.BadRequest(w, err)
 			return
 		}
 	}
 
-	// concatecate chunks
-	if err := s.concatChunks(id, sortChunks); err != nil {
-		glog.Error(err)
-		web.InternalError(w, err)
-		return
-	}
+	go func(id string, sortChunks SortChunks) {
+		var err error
+		// Update status
+		defer func() {
+			var model m.Model
+			if e := s.DB.Where("id = ?", id).Find(&model).Error; e != nil {
+				glog.Error(e)
+				return
+			}
 
-	var model m.Model
-	if err := s.DB.Where("id = ?", id).Find(&model).Error; err != nil {
-		glog.Error(err)
-		web.InternalError(w, err)
-		return
-	}
+			model.Status = int(proto.ModelStatus_SUCCESS)
+			if err != nil {
+				model.Status = int(proto.ModelStatus_FAILED)
+			}
 
-	// upload to minio
-	modelSavePath := s.modelSavePath(id)
-	modelFileName := filepath.Base(modelSavePath)
-	err := s.MinioUpload(modelSavePath, modelFileName, model.FileType)
-	if err != nil {
-		glog.Error(err)
-		web.InternalError(w, err)
-		return
-	}
+			err = s.DB.Save(&model).Error
+			if err != nil {
+				glog.Error(err)
+				return
+			}
+		}()
 
-	model.MinioPath = modelFileName
-	err = s.DB.Save(&model).Error
-	if err != nil {
-		glog.Error(err)
-		web.InternalError(w, err)
-		return
-	}
-
-	// clear
-	for _, meta := range sortChunks {
-		chunkFileName := fmt.Sprintf("%s_%s", meta.Md5, meta.Index)
-		chunkSavePath := s.chunkSavePath(chunkFileName)
-		if e := os.Remove(chunkSavePath); e != nil {
-			glog.Warning(e)
+		// concatecate chunks
+		err = s.concatChunks(id, sortChunks)
+		if err != nil {
+			glog.Error(err)
+			return
 		}
-	}
+
+		var model m.Model
+		err = s.DB.Where("id = ?", id).Find(&model).Error
+		if err != nil {
+			glog.Error(err)
+			return
+		}
+
+		// upload to minio
+		modelSavePath := s.modelSavePath(id)
+		modelFileName := filepath.Base(modelSavePath)
+		err = s.MinioUpload(modelSavePath, modelFileName, model.FileType)
+		if err != nil {
+			glog.Error(err)
+			return
+		}
+
+		model.MinioPath = modelFileName
+		err = s.DB.Save(&model).Error
+		if err != nil {
+			glog.Error(err)
+			return
+		}
+
+		// clear
+		for _, meta := range sortChunks {
+			chunkFileName := fmt.Sprintf("%s_%s", meta.Md5, meta.Index)
+			chunkSavePath := s.chunkSavePath(chunkFileName)
+			if e := os.Remove(chunkSavePath); e != nil {
+				glog.Warning(e)
+			}
+		}
+	}(id, sortChunks)
 
 	web.OK(w)
 }

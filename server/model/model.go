@@ -12,6 +12,7 @@ type Model struct {
 	FileType    string `gorm:"column:file_type; not null" json:"file_type"`
 	UserID      int    `gorm:"column:user_id; not null" json:"user_id"`
 	MinioPath   string `gorm:"column:minio_path; not null" json:"minio_path"`
+	Status      int    `gorm:"column:status; not null" json:"status"`
 }
 
 func (Model) TableName() string {

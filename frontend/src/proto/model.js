@@ -1942,6 +1942,26 @@ export const model = $root.model = (() => {
         return ChunkMeta;
     })();
 
+    /**
+     * ModelStatus enum.
+     * @name model.ModelStatus
+     * @enum {string}
+     * @property {number} UNKNOWN=0 UNKNOWN value
+     * @property {number} CREATED=1 CREATED value
+     * @property {number} PROCESSING=2 PROCESSING value
+     * @property {number} SUCCESS=3 SUCCESS value
+     * @property {number} FAILED=4 FAILED value
+     */
+    model.ModelStatus = (function() {
+        const valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "UNKNOWN"] = 0;
+        values[valuesById[1] = "CREATED"] = 1;
+        values[valuesById[2] = "PROCESSING"] = 2;
+        values[valuesById[3] = "SUCCESS"] = 3;
+        values[valuesById[4] = "FAILED"] = 4;
+        return values;
+    })();
+
     model.Model = (function() {
 
         /**
@@ -1954,6 +1974,7 @@ export const model = $root.model = (() => {
          * @property {string|null} [description] Model description
          * @property {string|null} [file_type] Model file_type
          * @property {common.IUser|null} [user] Model user
+         * @property {model.ModelStatus|null} [status] Model status
          */
 
         /**
@@ -2020,6 +2041,14 @@ export const model = $root.model = (() => {
         Model.prototype.user = null;
 
         /**
+         * Model status.
+         * @member {model.ModelStatus} status
+         * @memberof model.Model
+         * @instance
+         */
+        Model.prototype.status = 0;
+
+        /**
          * Creates a new Model instance using the specified properties.
          * @function create
          * @memberof model.Model
@@ -2055,6 +2084,8 @@ export const model = $root.model = (() => {
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.file_type);
             if (message.user != null && message.hasOwnProperty("user"))
                 $root.common.User.encode(message.user, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 7, wireType 0 =*/56).int32(message.status);
             return writer;
         };
 
@@ -2106,6 +2137,9 @@ export const model = $root.model = (() => {
                     break;
                 case 6:
                     message.user = $root.common.User.decode(reader, reader.uint32());
+                    break;
+                case 7:
+                    message.status = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2162,6 +2196,17 @@ export const model = $root.model = (() => {
                 if (error)
                     return "user." + error;
             }
+            if (message.status != null && message.hasOwnProperty("status"))
+                switch (message.status) {
+                default:
+                    return "status: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    break;
+                }
             return null;
         };
 
@@ -2199,6 +2244,28 @@ export const model = $root.model = (() => {
                     throw TypeError(".model.Model.user: object expected");
                 message.user = $root.common.User.fromObject(object.user);
             }
+            switch (object.status) {
+            case "UNKNOWN":
+            case 0:
+                message.status = 0;
+                break;
+            case "CREATED":
+            case 1:
+                message.status = 1;
+                break;
+            case "PROCESSING":
+            case 2:
+                message.status = 2;
+                break;
+            case "SUCCESS":
+            case 3:
+                message.status = 3;
+                break;
+            case "FAILED":
+            case 4:
+                message.status = 4;
+                break;
+            }
             return message;
         };
 
@@ -2226,6 +2293,7 @@ export const model = $root.model = (() => {
                 object.description = "";
                 object.file_type = "";
                 object.user = null;
+                object.status = options.enums === String ? "UNKNOWN" : 0;
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 if (typeof message.id === "number")
@@ -2242,6 +2310,8 @@ export const model = $root.model = (() => {
                 object.file_type = message.file_type;
             if (message.user != null && message.hasOwnProperty("user"))
                 object.user = $root.common.User.toObject(message.user, options);
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = options.enums === String ? $root.model.ModelStatus[message.status] : message.status;
             return object;
         };
 

@@ -842,6 +842,15 @@ export namespace model {
         public toJSON(): { [k: string]: any };
     }
 
+    /** ModelStatus enum. */
+    enum ModelStatus {
+        UNKNOWN = 0,
+        CREATED = 1,
+        PROCESSING = 2,
+        SUCCESS = 3,
+        FAILED = 4
+    }
+
     /** Properties of a Model. */
     interface IModel {
 
@@ -862,6 +871,9 @@ export namespace model {
 
         /** Model user */
         user?: (common.IUser|null);
+
+        /** Model status */
+        status?: (model.ModelStatus|null);
     }
 
     /** Represents a Model. */
@@ -890,6 +902,9 @@ export namespace model {
 
         /** Model user. */
         public user?: (common.IUser|null);
+
+        /** Model status. */
+        public status: model.ModelStatus;
 
         /**
          * Creates a new Model instance using the specified properties.

@@ -50,6 +50,7 @@
     "modelVersion": "版本:",
     "modelAuthor": "上传者:",
     "modelDescription": "描述:",
+    "modelStatus": "状态:",
     "empty": "空",
     "deleteModelConfirm": "确定删除模型"
 }
