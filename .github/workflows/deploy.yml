@@ -20,7 +20,7 @@ jobs:
         TWEB_PORT: 8888
 
   deploy:
-    runs-on: tweb
+    runs-on: self-hosted
     needs: test
 
     steps:
