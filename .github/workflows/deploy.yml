@@ -6,34 +6,28 @@ on:
       - v.*
 
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #
-  #   - name: Run test in docker container
-  #     run: docker-compose -f docker-compose.yml up --exit-code-from bazel bazel
-  #     env:
-  #       TWEB_POSTGRES_PORT: 5432
-  #       TWEB_MINIO_PORT: 9000
-  #       TWEB_PORT: 8888
-  #
-  deploy:
-    runs-on: self-hosted
-    # needs: test
+  test:
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    # TODO: build image with tag version && deploy
-    # - name: docker build
-    #   run: make build_prod_image
+    - name: Run test in docker container
+      run: docker-compose -f docker-compose.yml up --exit-code-from bazel bazel
+      env:
+        TWEB_POSTGRES_PORT: 5432
+        TWEB_MINIO_PORT: 9000
+        TWEB_PORT: 8888
 
+  deploy:
+    runs-on: self-hosted
+    needs: test
+
+    steps:
     - name: docker deploy services
       run: |
         docker-compose -f docker-compose-prod.yml stop tweb
-        docker rmi -f tradingai/tweb:latest
+        docker pull tradingai/tweb:latest
         docker-compose -f docker-compose-prod.yml up -d tweb
       env:
         TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN}}
