@@ -25,7 +25,7 @@ services:
     command: ["server", "/data"]
   tweb:
     image: tradingai/tweb:latest
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     container_name: tweb_app
     environment:
       TUSHARE_TOKEN: ${TUSHARE_TOKEN}
