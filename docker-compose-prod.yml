@@ -1,28 +1,28 @@
 version: '3'
 
 services:
-  # grandet_db:
-  #   image: postgres:11.1
-  #   environment:
-  #     POSTGRES_PASSWORD: ${TWEB_POSTGRES_PASSWORD}
-  #     POSTGRES_USER: ${TWEB_POSTGRES_USER}
-  #     POSTGRES_DB: ${TWEB_POSTGRES_DB}
-  #   container_name: tweb_db
-  #   ports:
-  #     - ${TWEB_POSTGRES_PORT}:5432
-  #   volumes:
-  #     - /tmp/tweb_db/pgdata:/var/lib/postgresql/data
-  # minio:
-  #   image: minio/minio:latest
-  #   ports:
-  #     - ${TWEB_MINIO_PORT}:9000
-  #   environment:
-  #     MINIO_ACCESS_KEY: ${TWEB_MINIO_ACCESS_KEY}
-  #     MINIO_SECRET_KEY: ${TWEB_MINIO_SECRET_KEY}
-  #   container_name: tweb_minio
-  #   volumes:
-  #     - /tmp/tweb/minio/data:/data
-  #   command: ["server", "/data"]
+  grandet_db:
+    image: postgres:11.1
+    environment:
+      POSTGRES_PASSWORD: ${TWEB_POSTGRES_PASSWORD}
+      POSTGRES_USER: ${TWEB_POSTGRES_USER}
+      POSTGRES_DB: ${TWEB_POSTGRES_DB}
+    container_name: tweb_db
+    ports:
+      - ${TWEB_POSTGRES_PORT}:5432
+    volumes:
+      - /tmp/tweb_db/pgdata:/var/lib/postgresql/data
+  minio:
+    image: minio/minio:latest
+    ports:
+      - ${TWEB_MINIO_PORT}:9000
+    environment:
+      MINIO_ACCESS_KEY: ${TWEB_MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${TWEB_MINIO_SECRET_KEY}
+    container_name: tweb_minio
+    volumes:
+      - /tmp/tweb/minio/data:/data
+    command: ["server", "/data"]
   tweb:
     image: registry.cn-hangzhou.aliyuncs.com/tradingai/tweb:latest
     container_name: tweb_app
@@ -51,7 +51,4 @@ services:
       TWEB_STORAGE_DIR: ${TWEB_STORAGE_DIR}
     ports:
       - ${TWEB_PORT}:${TWEB_PORT}
-    depends_on:
-      - grandet_db
-      - minio
     restart: always
