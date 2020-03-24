@@ -1,8 +1,9 @@
 name: CI
 
 on:
-  tags:
-    - v.*
+  create:
+    tags:
+      - v.*
 
 jobs:
   test:
