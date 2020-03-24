@@ -22,6 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # TODO: build image with tag version && deploy
     - name: docker build
       run: make build_prod_image
 
