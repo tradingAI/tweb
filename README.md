@@ -63,6 +63,10 @@ Tweb支持3种启动方式
 - [tbase](https://github.com/tradingAI/tbase)
 - [tenv](https://github.com/tradingAI/tenvs)
 
+# 赞助
+[![8v8rQS.png](https://s1.ax1x.com/2020/03/25/8v8rQS.png)](https://imgchr.com/i/8v8rQS)
+[![8vGiTA.png](https://s1.ax1x.com/2020/03/25/8vGiTA.png)](https://imgchr.com/i/8vGiTA)
+
 # TODO (mickey)
 - [x] CI
 - [ ] Add more test
