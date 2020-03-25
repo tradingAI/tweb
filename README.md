@@ -57,7 +57,7 @@ Tweb支持3种启动方式
 
     在浏览器中输入 [`http://localhost:3030`](http://localhost:3030) 访问  
 
-[![82Xd4H.png](https://s1.ax1x.com/2020/03/20/82Xd4H.png)](https://imgchr.com/i/82Xd4H)
+[![82Xd4H.png](https://s1.ax1x.com/2020/03/20/82Xd4H.png)](https://imgchr.com/i/82Xd4H) [![Join the chat at https://gitter.im/tradingAI/tweb](https://badges.gitter.im/tradingAI/tweb.svg)](https://gitter.im/tradingAI/tweb?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # 相关项目
 - [tbase](https://github.com/tradingAI/tbase)
