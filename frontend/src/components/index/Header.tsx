@@ -62,7 +62,6 @@ class Header extends BaseComponent<{}, State> {
                         {intl.formatMessage({ id: "logout" })}
                     </Button>
                 </div>
-                
             </div>
         )
     }
