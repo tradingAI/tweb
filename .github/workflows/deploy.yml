@@ -24,6 +24,8 @@ jobs:
     needs: test
 
     steps:
+    - uses: actions/checkout@v2
+    
     - name: ali docker login
       run:  echo "${{ secrets.ALI_DOCKER_PASSWORD }}" | docker login -u ${{ secrets.ALI_DOCKER_USERNAME }} registry.cn-hangzhou.aliyuncs.com --password-stdin
 
