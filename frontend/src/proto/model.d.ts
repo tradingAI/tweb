@@ -746,6 +746,192 @@ export namespace model {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a DownloadModelRequest. */
+    interface IDownloadModelRequest {
+
+        /** DownloadModelRequest id */
+        id?: (string|null);
+    }
+
+    /** Represents a DownloadModelRequest. */
+    class DownloadModelRequest implements IDownloadModelRequest {
+
+        /**
+         * Constructs a new DownloadModelRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.IDownloadModelRequest);
+
+        /** DownloadModelRequest id. */
+        public id: string;
+
+        /**
+         * Creates a new DownloadModelRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DownloadModelRequest instance
+         */
+        public static create(properties?: model.IDownloadModelRequest): model.DownloadModelRequest;
+
+        /**
+         * Encodes the specified DownloadModelRequest message. Does not implicitly {@link model.DownloadModelRequest.verify|verify} messages.
+         * @param message DownloadModelRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.IDownloadModelRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DownloadModelRequest message, length delimited. Does not implicitly {@link model.DownloadModelRequest.verify|verify} messages.
+         * @param message DownloadModelRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.IDownloadModelRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DownloadModelRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DownloadModelRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.DownloadModelRequest;
+
+        /**
+         * Decodes a DownloadModelRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DownloadModelRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.DownloadModelRequest;
+
+        /**
+         * Verifies a DownloadModelRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DownloadModelRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DownloadModelRequest
+         */
+        public static fromObject(object: { [k: string]: any }): model.DownloadModelRequest;
+
+        /**
+         * Creates a plain object from a DownloadModelRequest message. Also converts values to other types if specified.
+         * @param message DownloadModelRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.DownloadModelRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DownloadModelRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a DownloadModelResponse. */
+    interface IDownloadModelResponse {
+
+        /** DownloadModelResponse error */
+        error?: (common.Error|null);
+
+        /** DownloadModelResponse url */
+        url?: (string|null);
+    }
+
+    /** Represents a DownloadModelResponse. */
+    class DownloadModelResponse implements IDownloadModelResponse {
+
+        /**
+         * Constructs a new DownloadModelResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.IDownloadModelResponse);
+
+        /** DownloadModelResponse error. */
+        public error: common.Error;
+
+        /** DownloadModelResponse url. */
+        public url: string;
+
+        /**
+         * Creates a new DownloadModelResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DownloadModelResponse instance
+         */
+        public static create(properties?: model.IDownloadModelResponse): model.DownloadModelResponse;
+
+        /**
+         * Encodes the specified DownloadModelResponse message. Does not implicitly {@link model.DownloadModelResponse.verify|verify} messages.
+         * @param message DownloadModelResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.IDownloadModelResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DownloadModelResponse message, length delimited. Does not implicitly {@link model.DownloadModelResponse.verify|verify} messages.
+         * @param message DownloadModelResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.IDownloadModelResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DownloadModelResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DownloadModelResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.DownloadModelResponse;
+
+        /**
+         * Decodes a DownloadModelResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DownloadModelResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.DownloadModelResponse;
+
+        /**
+         * Verifies a DownloadModelResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DownloadModelResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DownloadModelResponse
+         */
+        public static fromObject(object: { [k: string]: any }): model.DownloadModelResponse;
+
+        /**
+         * Creates a plain object from a DownloadModelResponse message. Also converts values to other types if specified.
+         * @param message DownloadModelResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.DownloadModelResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DownloadModelResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a ChunkMeta. */
     interface IChunkMeta {
 

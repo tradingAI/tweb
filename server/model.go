@@ -8,8 +8,11 @@ import (
 	"path/filepath"
 	"sort"
 	"strconv"
+	"strings"
+	"time"
 
 	"net/http"
+	"net/url"
 
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
@@ -22,6 +25,7 @@ import (
 func (s *Server) handleModel(router *mux.Router) {
 	router.HandleFunc("/models/", s.fetchModels).Methods("GET")
 	router.HandleFunc("/models/{id:[0-9]+}/", s.deleteModel).Methods("DELETE")
+	router.HandleFunc("/models/download/{id:[0-9]+}/", s.downloadModel).Methods("POST")
 	router.HandleFunc("/models/upload/", s.uploadModelInit).Methods("POST")
 	router.HandleFunc("/models/upload/{id:[0-9]+}/chunk/", s.uploadModelChunk).Methods("POST")
 	router.HandleFunc("/models/upload/{id:[0-9]+}/completed/", s.uploadModelCompleted).Methods("POST")
@@ -81,6 +85,12 @@ func (s *Server) deleteModel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := s.Minio.RemoveObject(MODEL_BUCKET, model.MinioPath); err != nil {
+		glog.Error(err)
+		web.InternalError(w, err)
+		return
+	}
+
 	if err := s.DB.Delete(&model).Error; err != nil {
 		glog.Error(err)
 		web.InternalError(w, err)
@@ -88,6 +98,42 @@ func (s *Server) deleteModel(w http.ResponseWriter, r *http.Request) {
 	}
 
 	return
+}
+
+func (s *Server) downloadModel(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := vars["id"]
+
+	var model m.Model
+	if err := s.DB.Where("id = ?", id).Find(&model).Error; err != nil {
+		glog.Error(err)
+		web.InternalError(w, err)
+		return
+	}
+
+	// Set request parameters for content-disposition.
+	reqParams := make(url.Values)
+	reqParams.Set("response-content-disposition",
+		fmt.Sprintf("attachment; filename=\"%s.%s\"", model.Name, m.ModelFileTypeMap[model.FileType]))
+
+	// Generates a presigned url which expires in a day.
+	presignedURL, err := s.Minio.PresignedGetObject(MODEL_BUCKET, model.MinioPath, time.Hour*24, reqParams)
+	if err != nil {
+		glog.Error(err)
+		web.InternalError(w, err)
+		return
+	}
+
+	glog.Info("Successfully generated presigned URL", presignedURL)
+
+	url := strings.Replace(presignedURL.String(),
+		fmt.Sprintf("%s://%s", presignedURL.Scheme, presignedURL.Host),
+		fmt.Sprintf("%s://%s:%d", presignedURL.Scheme, s.Conf.Minio.Host, s.Conf.Minio.Port),
+		-1)
+
+	var resp proto.DownloadModelResponse
+	resp.Url = url
+	web.RespondJSON(w, &resp)
 }
 
 func (s *Server) uploadModelInit(w http.ResponseWriter, r *http.Request) {

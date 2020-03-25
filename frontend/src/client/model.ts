@@ -110,3 +110,7 @@ export const FetchModelList = async (req: model.FetchModelRequest): Promise< HTT
 export const DeleteModel = async (req: model.DeleteModelRequest): Promise< HTTPResult<model.DeleteModelResponse> > => {
     return await SendRequest<model.DeleteModelResponse>(Method.DELETE, `/models/${req.id}/`, req);
 }
+
+export const DownloadModel = async (req: model.DownloadModelRequest): Promise< HTTPResult<model.DownloadModelResponse> > => {
+    return await SendRequest<model.DownloadModelResponse>(Method.POST, `/models/download/${req.id}/`, req);
+}

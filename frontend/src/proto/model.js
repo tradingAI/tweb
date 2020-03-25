@@ -1732,6 +1732,426 @@ export const model = $root.model = (() => {
         return UploadModelCompleteResponse;
     })();
 
+    model.DownloadModelRequest = (function() {
+
+        /**
+         * Properties of a DownloadModelRequest.
+         * @memberof model
+         * @interface IDownloadModelRequest
+         * @property {string|null} [id] DownloadModelRequest id
+         */
+
+        /**
+         * Constructs a new DownloadModelRequest.
+         * @memberof model
+         * @classdesc Represents a DownloadModelRequest.
+         * @implements IDownloadModelRequest
+         * @constructor
+         * @param {model.IDownloadModelRequest=} [properties] Properties to set
+         */
+        function DownloadModelRequest(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DownloadModelRequest id.
+         * @member {string} id
+         * @memberof model.DownloadModelRequest
+         * @instance
+         */
+        DownloadModelRequest.prototype.id = "";
+
+        /**
+         * Creates a new DownloadModelRequest instance using the specified properties.
+         * @function create
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {model.IDownloadModelRequest=} [properties] Properties to set
+         * @returns {model.DownloadModelRequest} DownloadModelRequest instance
+         */
+        DownloadModelRequest.create = function create(properties) {
+            return new DownloadModelRequest(properties);
+        };
+
+        /**
+         * Encodes the specified DownloadModelRequest message. Does not implicitly {@link model.DownloadModelRequest.verify|verify} messages.
+         * @function encode
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {model.IDownloadModelRequest} message DownloadModelRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DownloadModelRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DownloadModelRequest message, length delimited. Does not implicitly {@link model.DownloadModelRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {model.IDownloadModelRequest} message DownloadModelRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DownloadModelRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DownloadModelRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.DownloadModelRequest} DownloadModelRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DownloadModelRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.DownloadModelRequest();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DownloadModelRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.DownloadModelRequest} DownloadModelRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DownloadModelRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DownloadModelRequest message.
+         * @function verify
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DownloadModelRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DownloadModelRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.DownloadModelRequest} DownloadModelRequest
+         */
+        DownloadModelRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.DownloadModelRequest)
+                return object;
+            let message = new $root.model.DownloadModelRequest();
+            if (object.id != null)
+                message.id = String(object.id);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DownloadModelRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.DownloadModelRequest
+         * @static
+         * @param {model.DownloadModelRequest} message DownloadModelRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DownloadModelRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults)
+                object.id = "";
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            return object;
+        };
+
+        /**
+         * Converts this DownloadModelRequest to JSON.
+         * @function toJSON
+         * @memberof model.DownloadModelRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DownloadModelRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DownloadModelRequest;
+    })();
+
+    model.DownloadModelResponse = (function() {
+
+        /**
+         * Properties of a DownloadModelResponse.
+         * @memberof model
+         * @interface IDownloadModelResponse
+         * @property {common.Error|null} [error] DownloadModelResponse error
+         * @property {string|null} [url] DownloadModelResponse url
+         */
+
+        /**
+         * Constructs a new DownloadModelResponse.
+         * @memberof model
+         * @classdesc Represents a DownloadModelResponse.
+         * @implements IDownloadModelResponse
+         * @constructor
+         * @param {model.IDownloadModelResponse=} [properties] Properties to set
+         */
+        function DownloadModelResponse(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DownloadModelResponse error.
+         * @member {common.Error} error
+         * @memberof model.DownloadModelResponse
+         * @instance
+         */
+        DownloadModelResponse.prototype.error = 0;
+
+        /**
+         * DownloadModelResponse url.
+         * @member {string} url
+         * @memberof model.DownloadModelResponse
+         * @instance
+         */
+        DownloadModelResponse.prototype.url = "";
+
+        /**
+         * Creates a new DownloadModelResponse instance using the specified properties.
+         * @function create
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {model.IDownloadModelResponse=} [properties] Properties to set
+         * @returns {model.DownloadModelResponse} DownloadModelResponse instance
+         */
+        DownloadModelResponse.create = function create(properties) {
+            return new DownloadModelResponse(properties);
+        };
+
+        /**
+         * Encodes the specified DownloadModelResponse message. Does not implicitly {@link model.DownloadModelResponse.verify|verify} messages.
+         * @function encode
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {model.IDownloadModelResponse} message DownloadModelResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DownloadModelResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.error != null && message.hasOwnProperty("error"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.error);
+            if (message.url != null && message.hasOwnProperty("url"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.url);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DownloadModelResponse message, length delimited. Does not implicitly {@link model.DownloadModelResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {model.IDownloadModelResponse} message DownloadModelResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DownloadModelResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DownloadModelResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.DownloadModelResponse} DownloadModelResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DownloadModelResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.DownloadModelResponse();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.error = reader.int32();
+                    break;
+                case 2:
+                    message.url = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DownloadModelResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.DownloadModelResponse} DownloadModelResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DownloadModelResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DownloadModelResponse message.
+         * @function verify
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DownloadModelResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.error != null && message.hasOwnProperty("error"))
+                switch (message.error) {
+                default:
+                    return "error: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    break;
+                }
+            if (message.url != null && message.hasOwnProperty("url"))
+                if (!$util.isString(message.url))
+                    return "url: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DownloadModelResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.DownloadModelResponse} DownloadModelResponse
+         */
+        DownloadModelResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.DownloadModelResponse)
+                return object;
+            let message = new $root.model.DownloadModelResponse();
+            switch (object.error) {
+            case "NO_ERROR":
+            case 0:
+                message.error = 0;
+                break;
+            case "UNKNOWN_ERROR":
+            case 1:
+                message.error = 1;
+                break;
+            case "INTERNAL_ERROR":
+            case 2:
+                message.error = 2;
+                break;
+            case "INVALID_USERNAME_OR_PASSWORD":
+            case 3:
+                message.error = 3;
+                break;
+            }
+            if (object.url != null)
+                message.url = String(object.url);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DownloadModelResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.DownloadModelResponse
+         * @static
+         * @param {model.DownloadModelResponse} message DownloadModelResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DownloadModelResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                object.error = options.enums === String ? "NO_ERROR" : 0;
+                object.url = "";
+            }
+            if (message.error != null && message.hasOwnProperty("error"))
+                object.error = options.enums === String ? $root.common.Error[message.error] : message.error;
+            if (message.url != null && message.hasOwnProperty("url"))
+                object.url = message.url;
+            return object;
+        };
+
+        /**
+         * Converts this DownloadModelResponse to JSON.
+         * @function toJSON
+         * @memberof model.DownloadModelResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DownloadModelResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DownloadModelResponse;
+    })();
+
     model.ChunkMeta = (function() {
 
         /**

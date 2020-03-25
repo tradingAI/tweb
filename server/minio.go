@@ -8,6 +8,10 @@ import (
 	"github.com/tradingAI/tweb/common"
 )
 
+const (
+	MODEL_BUCKET = "models"
+)
+
 type MinioConf struct {
 	AccessKey string
 	SecretKey string
@@ -59,35 +63,42 @@ func NewMinioClient(conf MinioConf) (client *minio.Client, err error) {
 	return
 }
 
-// MinioUpload ...
 func (s *Server) MinioUpload(fp string, objName string, contentType string) (err error) {
-	bucketName := "models"
 	location := "us-east-1"
 
-	exists, err := s.Minio.BucketExists(bucketName)
+	exists, err := s.Minio.BucketExists(MODEL_BUCKET)
 	if err != nil {
 		glog.Error(err)
 		return
 	}
 
 	if !exists {
-		err = s.Minio.MakeBucket(bucketName, location)
+		err = s.Minio.MakeBucket(MODEL_BUCKET, location)
 		if err != nil {
 			glog.Error(err)
 			return
 		}
 
-		glog.Infof("Successfully created bucket [%s]", bucketName)
+		glog.Infof("Successfully created bucket [%s]", MODEL_BUCKET)
 	}
 
-	// 使用FPutObject上传一个zip文件。
-	n, err := s.Minio.FPutObject(bucketName, objName, fp, minio.PutObjectOptions{ContentType: contentType})
+	n, err := s.Minio.FPutObject(MODEL_BUCKET, objName, fp, minio.PutObjectOptions{ContentType: contentType})
 	if err != nil {
 		glog.Error(err)
 		return
 	}
 
 	glog.Infof("Successfully uploaded %s of size %d", objName, n)
+
+	return
+}
+
+func (s *Server) MinioDownload(objName string, fp string) (err error) {
+	err = s.Minio.FGetObject(MODEL_BUCKET, objName, fp, minio.GetObjectOptions{})
+	if err != nil {
+		glog.Error(err)
+		return
+	}
 
 	return
 }

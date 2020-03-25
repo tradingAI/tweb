@@ -8,9 +8,10 @@ import { UploadOutlined,
     PauseCircleTwoTone,
     CloseCircleTwoTone,
     InfoCircleTwoTone,
-    ClockCircleTwoTone} from '@ant-design/icons';
+    ClockCircleTwoTone,
+    VerticalAlignBottomOutlined} from '@ant-design/icons';
 import BaseComponent from 'components/Base';
-import { UploadModel, CreateModel, FetchModelList, DeleteModel } from 'client/model';
+import { UploadModel, CreateModel, FetchModelList, DeleteModel, DownloadModel } from 'client/model';
 import { model } from 'proto/model';
 import store from 'store';
 import intl from 'react-intl-universal';
@@ -58,7 +59,6 @@ class ModelPage extends BaseComponent<{}, State> {
         if (!this.checkHTTPResult(resp)) {
             return
         }
-        console.log(resp)
         this.setState({
             modelList: resp.response?.models || []
         })
@@ -131,6 +131,24 @@ class ModelPage extends BaseComponent<{}, State> {
             return true;
         }
         return false;
+    }
+
+    downloadModel =async (id :string)=>{
+        const req = model.DownloadModelRequest.create({
+            id: id,
+        });
+        const resp = await DownloadModel(req);
+        if (!this.checkHTTPResult(resp)) {
+            return
+        }
+    
+        let downloadURL = resp.response?.url;
+        
+        if (downloadURL){
+            let a = document.createElement('a');
+            a.href = downloadURL;
+            a.click();
+        }
     }
 
     reset =()=>{
@@ -331,9 +349,16 @@ class ModelPage extends BaseComponent<{}, State> {
                                 </div>
 
                                 <div className="model-options">
-                                    <Button 
+                                <Button
+                                        type="primary"
+                                        className="option" 
+                                        icon={<VerticalAlignBottomOutlined />}
+                                        shape="circle"
+                                        disabled={item.status !== model.ModelStatus.SUCCESS}
+                                        onClick={()=>this.downloadModel(item.id)}
+                                    />
+                                    <Button
                                         danger
-                                        ghost
                                         type="default"
                                         className="option" 
                                         icon={<DeleteOutlined />}

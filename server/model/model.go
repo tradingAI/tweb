@@ -18,3 +18,8 @@ type Model struct {
 func (Model) TableName() string {
 	return "models"
 }
+
+var ModelFileTypeMap map[string]string = map[string]string{
+	"application/x-tar": "tar",
+	"application/zip":   "zip",
+}
