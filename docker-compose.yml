@@ -30,7 +30,7 @@ services:
       - /tmp/tweb/minio/data:/data
     command: ["server", "/data"]
   tweb:
-    image: tradingai/tweb:latest
+    image: registry.cn-hangzhou.aliyuncs.com/tradingai/tweb:latest
     container_name: tweb_app
     environment:
       TUSHARE_TOKEN: ${TUSHARE_TOKEN}
