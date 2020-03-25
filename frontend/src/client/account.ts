@@ -14,5 +14,5 @@ export const UpdateAccount = async (req: account.UpdateAccountRequest): Promise<
 }
 
 export const DeleteAccount = async (req: account.DeleteAccountRequest): Promise< HTTPResult<account.DeleteAccountResponse> > => {
-    return await SendRequest<account.DeleteAccountResponse>(Method.DELETE, `/accounts/${req.id}/`, req);
+    return await SendRequest<account.DeleteAccountResponse>(Method.DELETE, `/accounts/${req.id}/`);
 }

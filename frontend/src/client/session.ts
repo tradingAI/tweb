@@ -26,8 +26,8 @@ export const Login = async (req: session.LoginRequest): Promise< HTTPResult<sess
     return resp;
 }
 
-export const Logout = async (req: session.LogoutRequest): Promise< HTTPResult<session.LogoutResponse> > => {
-    const resp = await SendRequest<session.LogoutResponse>(Method.DELETE, `/sessions/`, req);
+export const Logout = async (): Promise< HTTPResult<session.LogoutResponse> > => {
+    const resp = await SendRequest<session.LogoutResponse>(Method.DELETE, `/sessions/`);
     ClearSession()
     return resp;
 }

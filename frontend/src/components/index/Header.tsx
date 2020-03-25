@@ -69,8 +69,7 @@ class Header extends BaseComponent<{}, State> {
     }
 
     logout = async () => {
-        const req = session.LogoutRequest.create({})
-        const result = await Logout(req);
+        const result = await Logout();
 
         if (!this.checkHTTPResult(result)) {
             return
