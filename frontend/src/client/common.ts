@@ -18,6 +18,14 @@ export interface HTTPResult<Resp extends HTTPResponse> {
     response?: Resp;
 }
 
+
+interface Payload {
+    body?: string;
+    method: any;
+    headers: any;
+}
+
+
 export const SendRequest = async <Resp extends HTTPResponse>(method: Method, url: string, data?: any): Promise< HTTPResult<Resp> > => {
     // The backend uses JSON instead of ProtoJSON, since web.ParseQueryString only support JSON.
     // The former will encode enum value as-is, i.e. as integers, while the latter will turn them into strings.
@@ -40,14 +48,30 @@ export const SendRequest = async <Resp extends HTTPResponse>(method: Method, url
         }
     }
 
-    const resp = await fetch(url, {
-        body,
-        method,
-        headers: {
+
+    let payload :Payload = {
+        method: method,
+        headers:{
             'Content-Type': 'application/json',
             'Access-Token': getSession()?.token || '',
-        },
-    });
+        }
+    };
+
+    if (method !== Method.DELETE){
+        payload.body = body
+    }
+
+    const resp = await fetch(url, payload);
+
+    // const resp = await fetch(url, {
+    //     body,
+    //     method,
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Access-Token': getSession()?.token || '',
+    //     },
+    // });
+
 
     const output = {
         statusCode: resp.status,
