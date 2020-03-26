@@ -105,6 +105,7 @@ class ModelPage extends BaseComponent<{}, State> {
 
     cancelUploadModel =()=>{
         this.switchUploadModal(false);
+        this.reset();
     }
 
     inputModelNameOnChange =(e: any)=>{
@@ -215,7 +216,7 @@ class ModelPage extends BaseComponent<{}, State> {
 
     handlePorgressChange= (num: number, totleChunk: number)=>{
         this.setState({
-            progress: num/totleChunk*100
+            progress: Math.round(num/totleChunk*100)
         })
     }
 

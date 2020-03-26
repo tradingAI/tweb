@@ -326,6 +326,11 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 				glog.Warning(e)
 			}
 		}
+
+		if e := os.Remove(modelSavePath); e != nil {
+			glog.Warning(e)
+		}
+
 	}(id, sortChunks)
 
 	web.OK(w)
