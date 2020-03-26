@@ -4,7 +4,7 @@ import { GetSession } from 'client/session';
 import SparkMD5 from 'spark-md5';
 import { model } from 'proto/model';
 
-const OneMB = 1*1024*1024;
+const CHUNK_SIZE = 128*1024;
 
 export const UploadModel = async (modelID :string, 
     file: any, 
@@ -19,7 +19,7 @@ export const UploadModel = async (modelID :string,
     
     try{
         // upload chunk
-        let chunk_list = await partUpload(modelID, file, OneMB, handleProgress);
+        let chunk_list = await partUpload(modelID, file, CHUNK_SIZE, handleProgress);
 
         // send complete signal
         const req = model.UploadModelCompleteRequest.create({
