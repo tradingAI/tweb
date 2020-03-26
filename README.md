@@ -59,13 +59,22 @@ Tweb支持3种启动方式
 
 [![82Xd4H.png](https://s1.ax1x.com/2020/03/20/82Xd4H.png)](https://imgchr.com/i/82Xd4H)
 
+# Features(In progress)
+- [x] 账号管理
+  - [x] 用户账号创建、删除
+- [x] 模型管理
+  - [x] 模型上传
+  - [x] 模型下载
+- [ ] 买卖点预测
+- [ ] 数据看板
+
 # 相关项目
 - [tbase](https://github.com/tradingAI/tbase)
 - [tenv](https://github.com/tradingAI/tenvs)
 
 # 赞助
-[![8v8rQS.png](https://s1.ax1x.com/2020/03/25/8v8rQS.png)](https://imgchr.com/i/8v8rQS)
-[![8vGiTA.png](https://s1.ax1x.com/2020/03/25/8vGiTA.png)](https://imgchr.com/i/8vGiTA)
+![avatar](docs/zfb.png)
+![avatar](docs/wx.png)
 
 # TODO (mickey)
 - [x] CI
