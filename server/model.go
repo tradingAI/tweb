@@ -24,7 +24,7 @@ import (
 
 func (s *Server) handleModel(router *mux.Router) {
 	router.HandleFunc("/models/", s.fetchModels).Methods("GET")
-	router.HandleFunc("/models/{id:[0-9]+}/", s.deleteModel).Methods("DELETE")
+	router.HandleFunc("/models/{id:[0-9]+}/delete/", s.deleteModel).Methods("POST")
 	router.HandleFunc("/models/download/{id:[0-9]+}/", s.downloadModel).Methods("POST")
 	router.HandleFunc("/models/upload/", s.uploadModelInit).Methods("POST")
 	router.HandleFunc("/models/upload/{id:[0-9]+}/chunk/", s.uploadModelChunk).Methods("POST")

@@ -18,11 +18,11 @@ import (
 )
 
 func (s *Server) handleSessionPublic(router *mux.Router) {
-	router.HandleFunc(`/sessions/`, s.Login).Methods("POST")
+	router.HandleFunc(`/sessions/login/`, s.Login).Methods("POST")
 }
 
 func (s *Server) handleSession(router *mux.Router) {
-	router.HandleFunc(`/sessions/`, s.Logout).Methods("DELETE")
+	router.HandleFunc(`/sessions/logout/`, s.Logout).Methods("POST")
 }
 
 func (s *Server) Login(w http.ResponseWriter, r *http.Request) {

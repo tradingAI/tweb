@@ -4,6 +4,7 @@ import { Typography, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import BaseComponent from 'components/Base';
 import { common } from 'proto/common';
+import { session } from 'proto/session';
 import { Logout, GetSession} from 'client/session';
 import intl from 'react-intl-universal';
 import { URLRoot } from 'common';
@@ -67,7 +68,8 @@ class Header extends BaseComponent<{}, State> {
     }
 
     logout = async () => {
-        const result = await Logout();
+        const req = session.LogoutRequest.create({});
+        const result = await Logout(req);
 
         if (!this.checkHTTPResult(result)) {
             return

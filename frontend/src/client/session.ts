@@ -14,7 +14,7 @@ export const IsLoggedIn = () => {
 }
 
 export const Login = async (req: session.LoginRequest): Promise< HTTPResult<session.LoginResponse> > => {
-    const resp = await SendRequest<session.LoginResponse>(Method.POST, `/sessions/`, req);
+    const resp = await SendRequest<session.LoginResponse>(Method.POST, `/sessions/login/`, req);
     const sess = resp.response?.session
     if (!sess) {
         return resp
@@ -26,8 +26,8 @@ export const Login = async (req: session.LoginRequest): Promise< HTTPResult<sess
     return resp;
 }
 
-export const Logout = async (): Promise< HTTPResult<session.LogoutResponse> > => {
-    const resp = await SendRequest<session.LogoutResponse>(Method.DELETE, `/sessions/`);
+export const Logout = async (req: session.LogoutRequest): Promise< HTTPResult<session.LogoutResponse> > => {
+    const resp = await SendRequest<session.LogoutResponse>(Method.POST, `/sessions/logout/`, req);
     ClearSession()
     return resp;
 }

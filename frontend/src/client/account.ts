@@ -10,9 +10,9 @@ export const CreateAccount = async (req: account.CreateAccountRequest): Promise<
 }
 
 export const UpdateAccount = async (req: account.UpdateAccountRequest): Promise< HTTPResult<account.UpdateAccountResponse> > => {
-    return await SendRequest<account.UpdateAccountResponse>(Method.PATCH, `/accounts/${req.id}/`, req);
+    return await SendRequest<account.UpdateAccountResponse>(Method.POST, `/accounts/${req.id}/update/`, req);
 }
 
 export const DeleteAccount = async (req: account.DeleteAccountRequest): Promise< HTTPResult<account.DeleteAccountResponse> > => {
-    return await SendRequest<account.DeleteAccountResponse>(Method.DELETE, `/accounts/${req.id}/`);
+    return await SendRequest<account.DeleteAccountResponse>(Method.POST, `/accounts/${req.id}/delete/`, req);
 }

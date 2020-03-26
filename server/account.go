@@ -15,8 +15,8 @@ import (
 func (s *Server) handleAccount(router *mux.Router) {
 	router.HandleFunc(`/accounts/`, s.FetchAccounts).Methods("GET")
 	router.HandleFunc(`/accounts/`, s.CreateAccount).Methods("POST")
-	router.HandleFunc(`/accounts/{id:[0-9]+}/`, s.UpdateAccount).Methods("PATCH")
-	router.HandleFunc(`/accounts/{id:[0-9]+}/`, s.DeleteAccount).Methods("DELETE")
+	router.HandleFunc(`/accounts/{id:[0-9]+}/update/`, s.UpdateAccount).Methods("POST")
+	router.HandleFunc(`/accounts/{id:[0-9]+}/delete/`, s.DeleteAccount).Methods("POST")
 }
 
 func (s *Server) FetchAccounts(w http.ResponseWriter, r *http.Request) {

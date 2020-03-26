@@ -63,16 +63,6 @@ export const SendRequest = async <Resp extends HTTPResponse>(method: Method, url
 
     const resp = await fetch(url, payload);
 
-    // const resp = await fetch(url, {
-    //     body,
-    //     method,
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Access-Token': getSession()?.token || '',
-    //     },
-    // });
-
-
     const output = {
         statusCode: resp.status,
     } as HTTPResult<Resp>;
