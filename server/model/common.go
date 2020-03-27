@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/tradingAI/tweb/proto"
+	proto "github.com/tradingAI/proto/gen/go/tweb"
 )
 
 type Session struct {

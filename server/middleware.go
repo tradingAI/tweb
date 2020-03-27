@@ -8,7 +8,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/tradingAI/go/utils/web"
-	"github.com/tradingAI/tweb/proto"
+	proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"
 )
 

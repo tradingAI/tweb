@@ -4,9 +4,9 @@ services:
   bazel:
     image: tradingai/bazel:latest
     command:
-      /bin/bash /root/go/src/github.com/tradingAI/tweb/docker-compose.sh
+      /bin/bash /go/src/github.com/tradingAI/tweb/docker-compose.sh
     volumes:
-      - .:/root/go/src/github.com/tradingAI/tweb/
+      - .:/go/src/github.com/tradingAI/tweb/
   grandet_db:
     image: postgres:11.1
     environment:

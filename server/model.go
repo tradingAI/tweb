@@ -18,7 +18,7 @@ import (
 	"github.com/gorilla/mux"
 	io2 "github.com/tradingAI/go/utils/io"
 	"github.com/tradingAI/go/utils/web"
-	"github.com/tradingAI/tweb/proto"
+	proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"
 )
 

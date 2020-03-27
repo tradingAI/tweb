@@ -12,8 +12,8 @@ import (
 	"github.com/tradingAI/go/utils/random"
 	"github.com/tradingAI/go/utils/web"
 	"github.com/tradingAI/go/utils/werkzeug"
+	proto "github.com/tradingAI/proto/gen/go/tweb"
 	"github.com/tradingAI/tweb/common"
-	"github.com/tradingAI/tweb/proto"
 	m "github.com/tradingAI/tweb/server/model"
 )
 
