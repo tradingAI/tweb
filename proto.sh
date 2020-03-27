@@ -40,3 +40,5 @@ for pb in $PROTO_ROOT/*.proto; do
         -o $FRONTEND_ROOT/src/proto/$filename.d.ts \
         $FRONTEND_ROOT/src/proto/$filename.js
 done
+
+cd $ROOT/proto/gen/go/tweb && go mod init
