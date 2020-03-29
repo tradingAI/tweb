@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { HTTPResponse, HTTPResult } from 'client/common';
-import { common } from 'proto/common';
+import { common } from 'proto/tweb/common';
 import { URLRoot } from 'common';
 import React from 'react';
 import intl from 'react-intl-universal';

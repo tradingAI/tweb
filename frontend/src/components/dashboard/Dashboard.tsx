@@ -3,7 +3,7 @@ import { DatePicker, Input, message } from 'antd';
 import BaseComponent from 'components/Base';
 import StockViewer from 'components/stock/Stock';
 import { FetchStockDaily } from 'client/stock';
-import {stock} from 'proto/stock';
+import {stock} from 'proto/tweb/stock';
 import moment from 'moment';
 import intl from 'react-intl-universal';
 import locale from 'antd/es/date-picker/locale/zh_CN';

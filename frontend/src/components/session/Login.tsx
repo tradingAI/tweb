@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import LoginForm from 'components/session/LoginForm'
 import BaseComponent from 'components/Base';
 import { FetchRecord } from 'client/record';
-import { record } from 'proto/record';
+import { record } from 'proto/tweb/record';
 import intl from 'react-intl-universal';
 import Particles from 'react-particles-js';
 import { params as particle_params } from './particles';

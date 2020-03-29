@@ -4,8 +4,8 @@ import { DeleteOutlined, EditOutlined, UserOutlined, ExclamationCircleOutlined }
 import BaseComponent from 'components/Base';
 import Header from 'components/account/Header';
 import { FetchAccountList, UpdateAccount, DeleteAccount } from 'client/account';
-import { account } from 'proto/account';
-import { common } from 'proto/common';
+import { account } from 'proto/tweb/account';
+import { user } from 'proto/common/user';
 import store from 'store';
 import intl from 'react-intl-universal';
 
@@ -15,7 +15,7 @@ const { confirm } = Modal;
 
 interface State {
     loading: boolean;
-    accounts: common.IUser[] | undefined;
+    accounts: user.IUser[] | undefined;
     username: string;
     id: number;
     visibleEditAccountModal: boolean;
@@ -26,7 +26,7 @@ interface State {
 class Account extends BaseComponent<{}, State> {
     state: Readonly<State> = {
         loading: false,
-        accounts: [] as common.IUser[],
+        accounts: [] as user.IUser[],
         username: "",
         id: -1,
         visibleEditAccountModal: false,
@@ -153,7 +153,7 @@ class Account extends BaseComponent<{}, State> {
                     renderItem={item => (
                         <List.Item className="account-item">
                             <div>
-                            {item.role === common.UserRole.ROLE_ADMIN ?
+                            {item.role === user.UserRole.ROLE_ADMIN ?
                                 <Tag color="#f50">ADMIN</Tag>:
                                 <Tag color="#108ee9">USER</Tag>
                             }
@@ -176,7 +176,7 @@ class Account extends BaseComponent<{}, State> {
                                     type="default"
                                     className="option" 
                                     icon={<DeleteOutlined />} 
-                                    disabled={item.role === common.UserRole.ROLE_ADMIN}
+                                    disabled={item.role === user.UserRole.ROLE_ADMIN}
                                     shape="circle"
                                     onClick={()=>this.deleteAccountConfirm(item.id)}
                                 />

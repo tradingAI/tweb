@@ -12,7 +12,7 @@ import { UploadOutlined,
     VerticalAlignBottomOutlined} from '@ant-design/icons';
 import BaseComponent from 'components/Base';
 import { UploadModel, CreateModel, FetchModelList, DeleteModel, DownloadModel } from 'client/model';
-import { model } from 'proto/model';
+import { model } from 'proto/tweb/model';
 import store from 'store';
 import intl from 'react-intl-universal';
 

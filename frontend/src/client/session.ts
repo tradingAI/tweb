@@ -1,5 +1,5 @@
 import { ClearSession, getSession, HTTPResult, Method, SendRequest, SetSession } from 'client/common';
-import { session } from 'proto/session';
+import { session } from 'proto/tweb/session';
 
 export const GetSession = () => {
     return getSession();

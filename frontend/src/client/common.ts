@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import { common } from 'proto/common';
-import { session } from 'proto/session';
+import { common } from 'proto/tweb/common';
+import { session } from 'proto/tweb/session';
 
 export enum Method {
     GET = 'GET',

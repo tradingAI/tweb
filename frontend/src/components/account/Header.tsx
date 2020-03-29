@@ -3,7 +3,7 @@ import { Layout, Button, Modal, Input, message} from 'antd';
 import { UserOutlined, UserAddOutlined } from '@ant-design/icons';
 import BaseComponent from 'components/Base';
 import { CreateAccount } from 'client/account';
-import { account } from 'proto/account';
+import { account } from 'proto/tweb/account';
 
 import intl from 'react-intl-universal';
 

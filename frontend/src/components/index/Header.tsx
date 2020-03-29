@@ -3,8 +3,8 @@ import React from 'react';
 import { Typography, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import BaseComponent from 'components/Base';
-import { common } from 'proto/common';
-import { session } from 'proto/session';
+import { user } from 'proto/common/user';
+import { session } from 'proto/tweb/session';
 import { Logout, GetSession} from 'client/session';
 import intl from 'react-intl-universal';
 import { URLRoot } from 'common';
@@ -35,7 +35,7 @@ class Header extends BaseComponent<{}, State> {
         this.setState({
             username: sess?.user?.nickname || "",
         });
-        if (sess?.user?.role === common.UserRole.ROLE_ADMIN){
+        if (sess?.user?.role === user.UserRole.ROLE_ADMIN){
             store.dispatch(setIsAdmin(true));
         }
     }

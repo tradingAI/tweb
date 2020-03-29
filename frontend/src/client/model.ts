@@ -2,7 +2,7 @@ import { HTTPResult, Method, SendRequest } from 'client/common';
 import axios from 'axios';
 import { GetSession } from 'client/session';
 import SparkMD5 from 'spark-md5';
-import { model } from 'proto/model';
+import { model } from 'proto/tweb/model';
 
 const CHUNK_SIZE = 128*1024;
 
