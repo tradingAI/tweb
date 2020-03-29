@@ -8,7 +8,8 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/tradingAI/go/utils/web"
-	proto "github.com/tradingAI/proto/gen/go/tweb"
+	common_proto "github.com/tradingAI/proto/gen/go/common"
+	tweb_proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"
 )
 
@@ -70,10 +71,10 @@ func (s *Server) authMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-func makeSession(user m.User, token string) *proto.Session {
-	return &proto.Session{
+func makeSession(user m.User, token string) *tweb_proto.Session {
+	return &tweb_proto.Session{
 		Token: token,
-		User: &proto.User{
+		User: &common_proto.User{
 			Role:     m.UserRoleLUT[user.Role],
 			Nickname: user.Username,
 		},

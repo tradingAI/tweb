@@ -4,16 +4,35 @@ set -e
 
 ROOT="$GOPATH/src/github.com/tradingAI"
 PROJECT_ROOT="$ROOT/tweb"
-PROTO_ROOT="$ROOT/proto/tweb"
+PROTO_ROOT="$ROOT/proto"
+PROTO_GEN_DIR="$PROTO_ROOT/gen"
+PROTO_TWEB="$PROTO_ROOT/tweb"
+PROTO_COMMON="$PROTO_ROOT/common"
+PROTO_MODEL="$PROTO_ROOT/model"
+PROTO_SCHEDULER="$PROTO_ROOT/scheduler"
 
-# clear old
-rm -rf $ROOT/server/proto
+rm -rf $PROTO_GEN_DIR
 
-# backend
-protoc \
-    -I $PROTO_ROOT \
-    --go_out=plugins=grpc:$GOPATH/src \
-    $PROTO_ROOT/*.proto
+for element in `ls $PROTO_ROOT`
+    do  
+        if [ -d $PROTO_ROOT/$element ];then 
+            echo build proto $PROTO_ROOT/$element
+            protoc \
+                -I $PROTO_ROOT \
+                --go_out=plugins=grpc:$GOPATH/src \
+                $PROTO_ROOT/$element/*.proto
+        fi  
+    done
+
+
+PROTO_GEN_GO_DIR=$PROTO_GEN_DIR/go
+for element in `ls $PROTO_GEN_GO_DIR`
+    do  
+        if [ -d $PROTO_GEN_GO_DIR/$element ];then
+            cd $PROTO_GEN_GO_DIR/$element && rm -rf go.mod && go mod init
+        fi  
+    done
+
 
 # frontend
 FRONTEND_ROOT="$PROJECT_ROOT/frontend"
@@ -23,7 +42,7 @@ rm -rf $FRONTEND_ROOT/src/proto
 mkdir -p $FRONTEND_ROOT/src/proto/admin
 
 # we have to generate js/ts from proto one file at a time
-for pb in $PROTO_ROOT/*.proto; do
+for pb in $PROTO_TWEB/*.proto; do
     file=$(basename -- "$pb") # turn `/path/to/some.proto` to `some.proto`
     filename="${file%.*}" # turn `some.proto` to `some`
     
@@ -40,5 +59,3 @@ for pb in $PROTO_ROOT/*.proto; do
         -o $FRONTEND_ROOT/src/proto/$filename.d.ts \
         $FRONTEND_ROOT/src/proto/$filename.js
 done
-
-cd $ROOT/proto/gen/go/tweb && go mod init

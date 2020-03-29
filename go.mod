@@ -12,7 +12,14 @@ require (
 	github.com/rs/cors v1.7.0
 	github.com/stretchr/testify v1.5.1
 	github.com/tradingAI/go v0.0.0-20200320075057-e810e5a7b406
+	github.com/tradingAI/proto/gen/go/common v0.0.0-00010101000000-000000000000
 	github.com/tradingAI/proto/gen/go/tweb v0.0.0-00010101000000-000000000000
 )
 
 replace github.com/tradingAI/proto/gen/go/tweb => ../proto/gen/go/tweb
+
+replace github.com/tradingAI/proto/gen/go/common => ../proto/gen/go/common
+
+replace github.com/tradingAI/proto/gen/go/model => ../proto/gen/go/model
+
+replace github.com/tradingAI/proto/gen/go/scheduler => ../proto/gen/go/scheduler

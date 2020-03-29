@@ -2393,7 +2393,7 @@ export const model = $root.model = (() => {
          * @property {string|null} [version] Model version
          * @property {string|null} [description] Model description
          * @property {string|null} [file_type] Model file_type
-         * @property {common.IUser|null} [user] Model user
+         * @property {user.IUser|null} [user] Model user
          * @property {model.ModelStatus|null} [status] Model status
          */
 
@@ -2418,7 +2418,7 @@ export const model = $root.model = (() => {
          * @memberof model.Model
          * @instance
          */
-        Model.prototype.id = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+        Model.prototype.id = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Model name.
@@ -2454,7 +2454,7 @@ export const model = $root.model = (() => {
 
         /**
          * Model user.
-         * @member {common.IUser|null|undefined} user
+         * @member {user.IUser|null|undefined} user
          * @memberof model.Model
          * @instance
          */
@@ -2493,7 +2493,7 @@ export const model = $root.model = (() => {
             if (!writer)
                 writer = $Writer.create();
             if (message.id != null && message.hasOwnProperty("id"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.id);
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
             if (message.name != null && message.hasOwnProperty("name"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
             if (message.version != null && message.hasOwnProperty("version"))
@@ -2503,7 +2503,7 @@ export const model = $root.model = (() => {
             if (message.file_type != null && message.hasOwnProperty("file_type"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.file_type);
             if (message.user != null && message.hasOwnProperty("user"))
-                $root.common.User.encode(message.user, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+                $root.user.User.encode(message.user, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             if (message.status != null && message.hasOwnProperty("status"))
                 writer.uint32(/* id 7, wireType 0 =*/56).int32(message.status);
             return writer;
@@ -2541,7 +2541,7 @@ export const model = $root.model = (() => {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.id = reader.int64();
+                    message.id = reader.uint64();
                     break;
                 case 2:
                     message.name = reader.string();
@@ -2556,7 +2556,7 @@ export const model = $root.model = (() => {
                     message.file_type = reader.string();
                     break;
                 case 6:
-                    message.user = $root.common.User.decode(reader, reader.uint32());
+                    message.user = $root.user.User.decode(reader, reader.uint32());
                     break;
                 case 7:
                     message.status = reader.int32();
@@ -2612,7 +2612,7 @@ export const model = $root.model = (() => {
                 if (!$util.isString(message.file_type))
                     return "file_type: string expected";
             if (message.user != null && message.hasOwnProperty("user")) {
-                let error = $root.common.User.verify(message.user);
+                let error = $root.user.User.verify(message.user);
                 if (error)
                     return "user." + error;
             }
@@ -2644,13 +2644,13 @@ export const model = $root.model = (() => {
             let message = new $root.model.Model();
             if (object.id != null)
                 if ($util.Long)
-                    (message.id = $util.Long.fromValue(object.id)).unsigned = false;
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = true;
                 else if (typeof object.id === "string")
                     message.id = parseInt(object.id, 10);
                 else if (typeof object.id === "number")
                     message.id = object.id;
                 else if (typeof object.id === "object")
-                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber();
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber(true);
             if (object.name != null)
                 message.name = String(object.name);
             if (object.version != null)
@@ -2662,7 +2662,7 @@ export const model = $root.model = (() => {
             if (object.user != null) {
                 if (typeof object.user !== "object")
                     throw TypeError(".model.Model.user: object expected");
-                message.user = $root.common.User.fromObject(object.user);
+                message.user = $root.user.User.fromObject(object.user);
             }
             switch (object.status) {
             case "UNKNOWN":
@@ -2704,7 +2704,7 @@ export const model = $root.model = (() => {
             let object = {};
             if (options.defaults) {
                 if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
+                    let long = new $util.Long(0, 0, true);
                     object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.id = options.longs === String ? "0" : 0;
@@ -2719,7 +2719,7 @@ export const model = $root.model = (() => {
                 if (typeof message.id === "number")
                     object.id = options.longs === String ? String(message.id) : message.id;
                 else
-                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber() : message.id;
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber(true) : message.id;
             if (message.name != null && message.hasOwnProperty("name"))
                 object.name = message.name;
             if (message.version != null && message.hasOwnProperty("version"))
@@ -2729,7 +2729,7 @@ export const model = $root.model = (() => {
             if (message.file_type != null && message.hasOwnProperty("file_type"))
                 object.file_type = message.file_type;
             if (message.user != null && message.hasOwnProperty("user"))
-                object.user = $root.common.User.toObject(message.user, options);
+                object.user = $root.user.User.toObject(message.user, options);
             if (message.status != null && message.hasOwnProperty("status"))
                 object.status = options.enums === String ? $root.model.ModelStatus[message.status] : message.status;
             return object;
@@ -2777,286 +2777,6 @@ export const common = $root.common = (() => {
         values[valuesById[2] = "INTERNAL_ERROR"] = 2;
         values[valuesById[3] = "INVALID_USERNAME_OR_PASSWORD"] = 3;
         return values;
-    })();
-
-    /**
-     * UserRole enum.
-     * @name common.UserRole
-     * @enum {string}
-     * @property {number} UNKNOWN_USER_ROLE=0 UNKNOWN_USER_ROLE value
-     * @property {number} ROLE_ADMIN=1 ROLE_ADMIN value
-     * @property {number} ROLE_USER=2 ROLE_USER value
-     */
-    common.UserRole = (function() {
-        const valuesById = {}, values = Object.create(valuesById);
-        values[valuesById[0] = "UNKNOWN_USER_ROLE"] = 0;
-        values[valuesById[1] = "ROLE_ADMIN"] = 1;
-        values[valuesById[2] = "ROLE_USER"] = 2;
-        return values;
-    })();
-
-    common.User = (function() {
-
-        /**
-         * Properties of a User.
-         * @memberof common
-         * @interface IUser
-         * @property {number|Long|null} [id] User id
-         * @property {common.UserRole|null} [role] User role
-         * @property {string|null} [nickname] User nickname
-         */
-
-        /**
-         * Constructs a new User.
-         * @memberof common
-         * @classdesc Represents a User.
-         * @implements IUser
-         * @constructor
-         * @param {common.IUser=} [properties] Properties to set
-         */
-        function User(properties) {
-            if (properties)
-                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * User id.
-         * @member {number|Long} id
-         * @memberof common.User
-         * @instance
-         */
-        User.prototype.id = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * User role.
-         * @member {common.UserRole} role
-         * @memberof common.User
-         * @instance
-         */
-        User.prototype.role = 0;
-
-        /**
-         * User nickname.
-         * @member {string} nickname
-         * @memberof common.User
-         * @instance
-         */
-        User.prototype.nickname = "";
-
-        /**
-         * Creates a new User instance using the specified properties.
-         * @function create
-         * @memberof common.User
-         * @static
-         * @param {common.IUser=} [properties] Properties to set
-         * @returns {common.User} User instance
-         */
-        User.create = function create(properties) {
-            return new User(properties);
-        };
-
-        /**
-         * Encodes the specified User message. Does not implicitly {@link common.User.verify|verify} messages.
-         * @function encode
-         * @memberof common.User
-         * @static
-         * @param {common.IUser} message User message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        User.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.id != null && message.hasOwnProperty("id"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.id);
-            if (message.role != null && message.hasOwnProperty("role"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.role);
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.nickname);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified User message, length delimited. Does not implicitly {@link common.User.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof common.User
-         * @static
-         * @param {common.IUser} message User message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        User.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a User message from the specified reader or buffer.
-         * @function decode
-         * @memberof common.User
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {common.User} User
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        User.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.common.User();
-            while (reader.pos < end) {
-                let tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.int64();
-                    break;
-                case 2:
-                    message.role = reader.int32();
-                    break;
-                case 3:
-                    message.nickname = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a User message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof common.User
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {common.User} User
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        User.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a User message.
-         * @function verify
-         * @memberof common.User
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        User.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
-                    return "id: integer|Long expected";
-            if (message.role != null && message.hasOwnProperty("role"))
-                switch (message.role) {
-                default:
-                    return "role: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                    break;
-                }
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                if (!$util.isString(message.nickname))
-                    return "nickname: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a User message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof common.User
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {common.User} User
-         */
-        User.fromObject = function fromObject(object) {
-            if (object instanceof $root.common.User)
-                return object;
-            let message = new $root.common.User();
-            if (object.id != null)
-                if ($util.Long)
-                    (message.id = $util.Long.fromValue(object.id)).unsigned = false;
-                else if (typeof object.id === "string")
-                    message.id = parseInt(object.id, 10);
-                else if (typeof object.id === "number")
-                    message.id = object.id;
-                else if (typeof object.id === "object")
-                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber();
-            switch (object.role) {
-            case "UNKNOWN_USER_ROLE":
-            case 0:
-                message.role = 0;
-                break;
-            case "ROLE_ADMIN":
-            case 1:
-                message.role = 1;
-                break;
-            case "ROLE_USER":
-            case 2:
-                message.role = 2;
-                break;
-            }
-            if (object.nickname != null)
-                message.nickname = String(object.nickname);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a User message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof common.User
-         * @static
-         * @param {common.User} message User
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        User.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            let object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    let long = new $util.Long(0, 0, false);
-                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.id = options.longs === String ? "0" : 0;
-                object.role = options.enums === String ? "UNKNOWN_USER_ROLE" : 0;
-                object.nickname = "";
-            }
-            if (message.id != null && message.hasOwnProperty("id"))
-                if (typeof message.id === "number")
-                    object.id = options.longs === String ? String(message.id) : message.id;
-                else
-                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber() : message.id;
-            if (message.role != null && message.hasOwnProperty("role"))
-                object.role = options.enums === String ? $root.common.UserRole[message.role] : message.role;
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                object.nickname = message.nickname;
-            return object;
-        };
-
-        /**
-         * Converts this User to JSON.
-         * @function toJSON
-         * @memberof common.User
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        User.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return User;
     })();
 
     common.StockDaily = (function() {
@@ -3468,6 +3188,298 @@ export const common = $root.common = (() => {
     })();
 
     return common;
+})();
+
+export const user = $root.user = (() => {
+
+    /**
+     * Namespace user.
+     * @exports user
+     * @namespace
+     */
+    const user = {};
+
+    /**
+     * UserRole enum.
+     * @name user.UserRole
+     * @enum {string}
+     * @property {number} UNKNOWN_USER_ROLE=0 UNKNOWN_USER_ROLE value
+     * @property {number} ROLE_ADMIN=1 ROLE_ADMIN value
+     * @property {number} ROLE_USER=2 ROLE_USER value
+     */
+    user.UserRole = (function() {
+        const valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[0] = "UNKNOWN_USER_ROLE"] = 0;
+        values[valuesById[1] = "ROLE_ADMIN"] = 1;
+        values[valuesById[2] = "ROLE_USER"] = 2;
+        return values;
+    })();
+
+    user.User = (function() {
+
+        /**
+         * Properties of a User.
+         * @memberof user
+         * @interface IUser
+         * @property {number|Long|null} [id] User id
+         * @property {user.UserRole|null} [role] User role
+         * @property {string|null} [nickname] User nickname
+         */
+
+        /**
+         * Constructs a new User.
+         * @memberof user
+         * @classdesc Represents a User.
+         * @implements IUser
+         * @constructor
+         * @param {user.IUser=} [properties] Properties to set
+         */
+        function User(properties) {
+            if (properties)
+                for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * User id.
+         * @member {number|Long} id
+         * @memberof user.User
+         * @instance
+         */
+        User.prototype.id = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * User role.
+         * @member {user.UserRole} role
+         * @memberof user.User
+         * @instance
+         */
+        User.prototype.role = 0;
+
+        /**
+         * User nickname.
+         * @member {string} nickname
+         * @memberof user.User
+         * @instance
+         */
+        User.prototype.nickname = "";
+
+        /**
+         * Creates a new User instance using the specified properties.
+         * @function create
+         * @memberof user.User
+         * @static
+         * @param {user.IUser=} [properties] Properties to set
+         * @returns {user.User} User instance
+         */
+        User.create = function create(properties) {
+            return new User(properties);
+        };
+
+        /**
+         * Encodes the specified User message. Does not implicitly {@link user.User.verify|verify} messages.
+         * @function encode
+         * @memberof user.User
+         * @static
+         * @param {user.IUser} message User message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        User.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
+            if (message.role != null && message.hasOwnProperty("role"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.role);
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.nickname);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified User message, length delimited. Does not implicitly {@link user.User.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof user.User
+         * @static
+         * @param {user.IUser} message User message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        User.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a User message from the specified reader or buffer.
+         * @function decode
+         * @memberof user.User
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {user.User} User
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        User.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            let end = length === undefined ? reader.len : reader.pos + length, message = new $root.user.User();
+            while (reader.pos < end) {
+                let tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.uint64();
+                    break;
+                case 2:
+                    message.role = reader.int32();
+                    break;
+                case 3:
+                    message.nickname = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a User message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof user.User
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {user.User} User
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        User.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a User message.
+         * @function verify
+         * @memberof user.User
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        User.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
+                    return "id: integer|Long expected";
+            if (message.role != null && message.hasOwnProperty("role"))
+                switch (message.role) {
+                default:
+                    return "role: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                    break;
+                }
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a User message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof user.User
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {user.User} User
+         */
+        User.fromObject = function fromObject(object) {
+            if (object instanceof $root.user.User)
+                return object;
+            let message = new $root.user.User();
+            if (object.id != null)
+                if ($util.Long)
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = true;
+                else if (typeof object.id === "string")
+                    message.id = parseInt(object.id, 10);
+                else if (typeof object.id === "number")
+                    message.id = object.id;
+                else if (typeof object.id === "object")
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber(true);
+            switch (object.role) {
+            case "UNKNOWN_USER_ROLE":
+            case 0:
+                message.role = 0;
+                break;
+            case "ROLE_ADMIN":
+            case 1:
+                message.role = 1;
+                break;
+            case "ROLE_USER":
+            case 2:
+                message.role = 2;
+                break;
+            }
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a User message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof user.User
+         * @static
+         * @param {user.User} message User
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        User.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            let object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    let long = new $util.Long(0, 0, true);
+                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.id = options.longs === String ? "0" : 0;
+                object.role = options.enums === String ? "UNKNOWN_USER_ROLE" : 0;
+                object.nickname = "";
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (typeof message.id === "number")
+                    object.id = options.longs === String ? String(message.id) : message.id;
+                else
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber(true) : message.id;
+            if (message.role != null && message.hasOwnProperty("role"))
+                object.role = options.enums === String ? $root.user.UserRole[message.role] : message.role;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            return object;
+        };
+
+        /**
+         * Converts this User to JSON.
+         * @function toJSON
+         * @memberof user.User
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        User.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return User;
+    })();
+
+    return user;
 })();
 
 export { $root as default };

@@ -7,7 +7,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/tradingAI/go/utils/web"
 	"github.com/tradingAI/go/utils/werkzeug"
-	proto "github.com/tradingAI/proto/gen/go/tweb"
+	common_proto "github.com/tradingAI/proto/gen/go/common"
+	tweb_proto "github.com/tradingAI/proto/gen/go/tweb"
 	"github.com/tradingAI/tweb/common"
 	m "github.com/tradingAI/tweb/server/model"
 )
@@ -21,7 +22,7 @@ func (s *Server) handleAccount(router *mux.Router) {
 
 func (s *Server) FetchAccounts(w http.ResponseWriter, r *http.Request) {
 	var users []m.User
-	var resp proto.FetchAccountResponse
+	var resp tweb_proto.FetchAccountResponse
 
 	if err := s.DB.Find(&users).Error; err != nil {
 		glog.Error(err)
@@ -29,10 +30,10 @@ func (s *Server) FetchAccounts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var accounts []*proto.User
+	var accounts []*common_proto.User
 	for _, user := range users {
-		accounts = append(accounts, &proto.User{
-			Id:       int64(user.ID),
+		accounts = append(accounts, &common_proto.User{
+			Id:       uint64(user.ID),
 			Nickname: user.Username,
 			Role:     m.UserRoleLUT[user.Role],
 		})
@@ -44,7 +45,7 @@ func (s *Server) FetchAccounts(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) CreateAccount(w http.ResponseWriter, r *http.Request) {
-	var req proto.CreateAccountRequest
+	var req tweb_proto.CreateAccountRequest
 
 	if err := web.ReadJSONBody(r.Body, &req); err != nil {
 		glog.Error(err)
@@ -74,7 +75,7 @@ func (s *Server) CreateAccount(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) UpdateAccount(w http.ResponseWriter, r *http.Request) {
-	var req proto.UpdateAccountRequest
+	var req tweb_proto.UpdateAccountRequest
 
 	if err := web.ReadJSONBody(r.Body, &req); err != nil {
 		glog.Error(err)
@@ -100,7 +101,7 @@ func (s *Server) UpdateAccount(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) DeleteAccount(w http.ResponseWriter, r *http.Request) {
-	var req proto.DeleteAccountRequest
+	var req tweb_proto.DeleteAccountRequest
 
 	if err := web.ReadJSONBody(r.Body, &req); err != nil {
 		glog.Error(err)

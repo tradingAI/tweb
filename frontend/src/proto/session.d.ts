@@ -9,7 +9,7 @@ export namespace session {
         token?: (string|null);
 
         /** Session user */
-        user?: (common.IUser|null);
+        user?: (user.IUser|null);
     }
 
     /** Represents a Session. */
@@ -25,7 +25,7 @@ export namespace session {
         public token: string;
 
         /** Session user. */
-        public user?: (common.IUser|null);
+        public user?: (user.IUser|null);
 
         /**
          * Creates a new Session instance using the specified properties.
@@ -465,16 +465,8 @@ export namespace session {
     }
 }
 
-/** Namespace common. */
-export namespace common {
-
-    /** Error enum. */
-    enum Error {
-        NO_ERROR = 0,
-        UNKNOWN_ERROR = 1,
-        INTERNAL_ERROR = 2,
-        INVALID_USERNAME_OR_PASSWORD = 3
-    }
+/** Namespace user. */
+export namespace user {
 
     /** UserRole enum. */
     enum UserRole {
@@ -490,7 +482,7 @@ export namespace common {
         id?: (number|Long|null);
 
         /** User role */
-        role?: (common.UserRole|null);
+        role?: (user.UserRole|null);
 
         /** User nickname */
         nickname?: (string|null);
@@ -503,13 +495,13 @@ export namespace common {
          * Constructs a new User.
          * @param [properties] Properties to set
          */
-        constructor(properties?: common.IUser);
+        constructor(properties?: user.IUser);
 
         /** User id. */
         public id: (number|Long);
 
         /** User role. */
-        public role: common.UserRole;
+        public role: user.UserRole;
 
         /** User nickname. */
         public nickname: string;
@@ -519,23 +511,23 @@ export namespace common {
          * @param [properties] Properties to set
          * @returns User instance
          */
-        public static create(properties?: common.IUser): common.User;
+        public static create(properties?: user.IUser): user.User;
 
         /**
-         * Encodes the specified User message. Does not implicitly {@link common.User.verify|verify} messages.
+         * Encodes the specified User message. Does not implicitly {@link user.User.verify|verify} messages.
          * @param message User message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: common.IUser, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: user.IUser, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified User message, length delimited. Does not implicitly {@link common.User.verify|verify} messages.
+         * Encodes the specified User message, length delimited. Does not implicitly {@link user.User.verify|verify} messages.
          * @param message User message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: common.IUser, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: user.IUser, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
          * Decodes a User message from the specified reader or buffer.
@@ -545,7 +537,7 @@ export namespace common {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): common.User;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): user.User;
 
         /**
          * Decodes a User message from the specified reader or buffer, length delimited.
@@ -554,7 +546,7 @@ export namespace common {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): common.User;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): user.User;
 
         /**
          * Verifies a User message.
@@ -568,7 +560,7 @@ export namespace common {
          * @param object Plain object
          * @returns User
          */
-        public static fromObject(object: { [k: string]: any }): common.User;
+        public static fromObject(object: { [k: string]: any }): user.User;
 
         /**
          * Creates a plain object from a User message. Also converts values to other types if specified.
@@ -576,13 +568,25 @@ export namespace common {
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: common.User, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: user.User, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
          * Converts this User to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
+    }
+}
+
+/** Namespace common. */
+export namespace common {
+
+    /** Error enum. */
+    enum Error {
+        NO_ERROR = 0,
+        UNKNOWN_ERROR = 1,
+        INTERNAL_ERROR = 2,
+        INVALID_USERNAME_OR_PASSWORD = 3
     }
 
     /** Properties of a StockDaily. */

@@ -76,7 +76,7 @@ func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	// insert a session
 	sess := m.Session{
 		Token:     random.StringWithCharset(8, random.CharsetAlphaNumeric),
-		UserID:    int(user.ID),
+		UserID:    uint64(user.ID),
 		ExpiredAt: time.Now().Add(12 * time.Hour),
 	}
 

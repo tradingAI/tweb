@@ -18,7 +18,8 @@ import (
 	"github.com/gorilla/mux"
 	io2 "github.com/tradingAI/go/utils/io"
 	"github.com/tradingAI/go/utils/web"
-	proto "github.com/tradingAI/proto/gen/go/tweb"
+	common_proto "github.com/tradingAI/proto/gen/go/common"
+	tweb_proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"
 )
 
@@ -40,17 +41,17 @@ func (s *Server) fetchModels(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var resp proto.FetchModelResponse
+	var resp tweb_proto.FetchModelResponse
 
-	var modelsProto []*proto.Model
+	var modelsProto []*common_proto.Model
 
 	for _, model := range models {
-		mp := proto.Model{
-			Id:          int64(model.ID),
+		mp := common_proto.Model{
+			Id:          uint64(model.ID),
 			Name:        model.Name,
 			Version:     model.Version,
 			Description: model.Description,
-			Status:      proto.ModelStatus(model.Status),
+			Status:      common_proto.ModelStatus(model.Status),
 		}
 
 		var user m.User
@@ -60,8 +61,8 @@ func (s *Server) fetchModels(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		mp.User = &proto.User{
-			Id:       int64(user.ID),
+		mp.User = &common_proto.User{
+			Id:       uint64(user.ID),
 			Role:     m.UserRoleLUT[user.Role],
 			Nickname: user.Username,
 		}
@@ -131,13 +132,13 @@ func (s *Server) downloadModel(w http.ResponseWriter, r *http.Request) {
 		fmt.Sprintf("%s://%s:%d", presignedURL.Scheme, s.Conf.Minio.Host, s.Conf.Minio.Port),
 		-1)
 
-	var resp proto.DownloadModelResponse
+	var resp tweb_proto.DownloadModelResponse
 	resp.Url = url
 	web.RespondJSON(w, &resp)
 }
 
 func (s *Server) uploadModelInit(w http.ResponseWriter, r *http.Request) {
-	var req proto.CreateModelRequest
+	var req tweb_proto.CreateModelRequest
 
 	if err := web.ReadJSONBody(r.Body, &req); err != nil {
 		glog.Error(err)
@@ -157,14 +158,14 @@ func (s *Server) uploadModelInit(w http.ResponseWriter, r *http.Request) {
 		req.Description,
 		req.FileType,
 		sess.UserID,
-		proto.ModelStatus_CREATED)
+		common_proto.ModelStatus_CREATED)
 	if err != nil {
 		glog.Error(err)
 		web.InternalError(w, err)
 		return
 	}
 
-	var resp proto.CreateModelResponse
+	var resp tweb_proto.CreateModelResponse
 	resp.Id = strconv.Itoa(modelID)
 
 	web.RespondJSON(w, &resp)
@@ -182,8 +183,8 @@ func (s *Server) uploadModelChunk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if model.Status != int(proto.ModelStatus_PROCESSING) {
-		model.Status = int(proto.ModelStatus_PROCESSING)
+	if model.Status != int(common_proto.ModelStatus_PROCESSING) {
+		model.Status = int(common_proto.ModelStatus_PROCESSING)
 		err = s.DB.Save(&model).Error
 		if err != nil {
 			glog.Error(err)
@@ -237,7 +238,7 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, _ := vars["id"]
 
-	var req proto.UploadModelCompleteRequest
+	var req tweb_proto.UploadModelCompleteRequest
 	var err error
 
 	err = web.ReadJSONBody(r.Body, &req)
@@ -276,9 +277,9 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			model.Status = int(proto.ModelStatus_SUCCESS)
+			model.Status = int(common_proto.ModelStatus_SUCCESS)
 			if err != nil {
-				model.Status = int(proto.ModelStatus_FAILED)
+				model.Status = int(common_proto.ModelStatus_FAILED)
 			}
 
 			err = s.DB.Save(&model).Error
@@ -336,7 +337,7 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 	web.OK(w)
 }
 
-type SortChunks []*proto.ChunkMeta
+type SortChunks []*tweb_proto.ChunkMeta
 
 func (s SortChunks) Len() int           { return len(s) }
 func (s SortChunks) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }

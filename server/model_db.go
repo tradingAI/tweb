@@ -2,12 +2,12 @@ package server
 
 import (
 	"github.com/golang/glog"
-	proto "github.com/tradingAI/proto/gen/go/tweb"
+	common_proto "github.com/tradingAI/proto/gen/go/common"
 	m "github.com/tradingAI/tweb/server/model"
 )
 
 func (s *Server) CreateModel(name, version, description, fileType string,
-	userID int, status proto.ModelStatus) (modelID int, err error) {
+	userID uint64, status common_proto.ModelStatus) (modelID int, err error) {
 	model := &m.Model{
 		Name:        name,
 		Version:     version,

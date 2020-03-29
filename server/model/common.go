@@ -4,14 +4,14 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	proto "github.com/tradingAI/proto/gen/go/tweb"
+	proto "github.com/tradingAI/proto/gen/go/common"
 )
 
 type Session struct {
 	gorm.Model
 	Token     string    `gorm:"column:token; not null" json:"token"`
 	ExpiredAt time.Time `gorm:"column:expired_at; not null" json:"expired_at"`
-	UserID    int       `gorm:"column:user_id; not null" json:"user_id"`
+	UserID    uint64    `gorm:"column:user_id; not null" json:"user_id"`
 }
 
 func (Session) TableName() string {
