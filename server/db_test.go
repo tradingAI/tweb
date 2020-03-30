@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tradingAI/tweb/common"
+	err2 "github.com/tradingAI/go/error"
 )
 
 func TestValidate(t *testing.T) {
@@ -19,19 +19,19 @@ func TestValidate(t *testing.T) {
 		ReconnectSec: time.Second * 3,
 	}
 
-	assert.Equal(t, common.ErrEmptyDBHost, dbConf.validate())
+	assert.Equal(t, err2.ErrEmptyDBHost, dbConf.validate())
 	dbConf.Host = "db_host"
 
-	assert.Equal(t, common.ErrInvalidDBPort, dbConf.validate())
+	assert.Equal(t, err2.ErrInvalidDBPort, dbConf.validate())
 	dbConf.Port = 1025
 
-	assert.Equal(t, common.ErrEmptyDBUsername, dbConf.validate())
+	assert.Equal(t, err2.ErrEmptyDBUsername, dbConf.validate())
 	dbConf.Username = "db_username"
 
-	assert.Equal(t, common.ErrEmptyDBPassword, dbConf.validate())
+	assert.Equal(t, err2.ErrEmptyDBPassword, dbConf.validate())
 	dbConf.Password = "db_password"
 
-	assert.Equal(t, common.ErrEmptyDBDatabase, dbConf.validate())
+	assert.Equal(t, err2.ErrEmptyDBDatabase, dbConf.validate())
 	dbConf.Database = "db_name"
 
 	assert.NoError(t, dbConf.validate())
