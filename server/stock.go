@@ -6,7 +6,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	"github.com/tradingAI/go/utils/web"
+	"github.com/tradingAI/go/web"
 	proto "github.com/tradingAI/proto/gen/go/tweb"
 	"github.com/tradingAI/tweb/common"
 	"github.com/tradingAI/tweb/tushare"

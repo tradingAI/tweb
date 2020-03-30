@@ -16,8 +16,9 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	io2 "github.com/tradingAI/go/utils/io"
-	"github.com/tradingAI/go/utils/web"
+	io2 "github.com/tradingAI/go/io"
+	minio "github.com/tradingAI/go/s3/minio"
+	"github.com/tradingAI/go/web"
 	common_proto "github.com/tradingAI/proto/gen/go/common"
 	tweb_proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"
@@ -306,7 +307,7 @@ func (s *Server) uploadModelCompleted(w http.ResponseWriter, r *http.Request) {
 		// upload to minio
 		modelSavePath := s.modelSavePath(id)
 		modelFileName := filepath.Base(modelSavePath)
-		err = s.MinioUpload(modelSavePath, modelFileName, model.FileType)
+		err = minio.MinioUpload(s.Minio, MODEL_BUCKET, modelSavePath, modelFileName, model.FileType)
 		if err != nil {
 			glog.Error(err)
 			return

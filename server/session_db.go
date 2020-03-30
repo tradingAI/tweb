@@ -2,7 +2,7 @@ package server
 
 import (
 	"github.com/golang/glog"
-	"github.com/tradingAI/go/utils/werkzeug"
+	"github.com/tradingAI/go/werkzeug"
 	m "github.com/tradingAI/tweb/server/model"
 )
 

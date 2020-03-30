@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	"github.com/tradingAI/go/utils/web"
+	"github.com/tradingAI/go/web"
 )
 
 func (s *Server) handleFrontend(router *mux.Router) {

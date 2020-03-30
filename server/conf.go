@@ -8,20 +8,22 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	"github.com/tradingAI/go/utils/web"
+	pg "github.com/tradingAI/go/db/postgres"
+	minio "github.com/tradingAI/go/s3/minio"
+	"github.com/tradingAI/go/web"
 	proto "github.com/tradingAI/proto/gen/go/tweb"
 	"github.com/tradingAI/tweb/common"
 )
 
 type Conf struct {
-	DB               DBConf
+	DB               pg.DBConf
 	CROSAllowOrigins []string
 	StorageDir       string
 	Web              WebConf
 	CreateAdmin      bool
 	Admin            Admin
 	Record           Record
-	Minio            MinioConf
+	Minio            minio.MinioConf
 }
 
 type WebConf struct {
@@ -88,7 +90,7 @@ func LoadConf() (conf Conf, err error) {
 		return
 	}
 	conf = Conf{
-		DB: DBConf{
+		DB: pg.DBConf{
 			Database:     os.Getenv("TWEB_POSTGRES_DB"),
 			Username:     os.Getenv("TWEB_POSTGRES_USER"),
 			Password:     os.Getenv("TWEB_POSTGRES_PASSWORD"),
@@ -116,7 +118,7 @@ func LoadConf() (conf Conf, err error) {
 			Code: os.Getenv("TWEB_PRECORD_CODE"),
 			URL:  os.Getenv("TWEB_PRECORD_URL"),
 		},
-		Minio: MinioConf{
+		Minio: minio.MinioConf{
 			AccessKey: os.Getenv("TWEB_MINIO_ACCESS_KEY"),
 			SecretKey: os.Getenv("TWEB_MINIO_SECRET_KEY"),
 			Host:      os.Getenv("TWEB_MINIO_HOST"),
@@ -145,12 +147,12 @@ func (c *Conf) Validate() (err error) {
 		glog.Info(err)
 		return
 	}
-	if err = c.DB.validate(); err != nil {
+	if err = c.DB.Validate(); err != nil {
 		glog.Info(err)
 		return
 	}
 
-	if err = c.Minio.validate(); err != nil {
+	if err = c.Minio.Validate(); err != nil {
 		glog.Error(err)
 		return
 	}

@@ -7,7 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 
 	"github.com/golang/glog"
-	"github.com/tradingAI/go/utils/web"
+	"github.com/tradingAI/go/web"
 	common_proto "github.com/tradingAI/proto/gen/go/common"
 	tweb_proto "github.com/tradingAI/proto/gen/go/tweb"
 	m "github.com/tradingAI/tweb/server/model"

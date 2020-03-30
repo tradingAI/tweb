@@ -15,7 +15,9 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/minio/minio-go/v6"
 	"github.com/rs/cors"
-	"github.com/tradingAI/go/utils/web"
+	pg "github.com/tradingAI/go/db/postgres"
+	minio2 "github.com/tradingAI/go/s3/minio"
+	"github.com/tradingAI/go/web"
 	m "github.com/tradingAI/tweb/server/model"
 	"github.com/tradingAI/tweb/tushare"
 )
@@ -39,7 +41,7 @@ func New(conf Conf, frontend *packr.Box) (s *Server, err error) {
 	}
 
 	// Init db
-	s.DB, err = NewPostgreSQL(conf.DB)
+	s.DB, err = pg.NewPostgreSQL(conf.DB)
 	if err != nil {
 		glog.Error(err)
 		return
@@ -68,7 +70,7 @@ func New(conf Conf, frontend *packr.Box) (s *Server, err error) {
 		return
 	}
 
-	s.Minio, err = NewMinioClient(s.Conf.Minio)
+	s.Minio, err = minio2.NewMinioClient(s.Conf.Minio)
 	if err != nil {
 		glog.Error(err)
 		return

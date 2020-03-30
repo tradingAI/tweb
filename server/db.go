@@ -1,84 +1,18 @@
 package server
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang/glog"
-	"github.com/jinzhu/gorm"
-	"github.com/tradingAI/tweb/common"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	pg "github.com/tradingAI/go/db/postgres"
 )
-
-type DBConf struct {
-	Database     string        `yaml:"database"`
-	Username     string        `yaml:"username"`
-	Password     string        `yaml:"password"`
-	Port         int           `yaml:"port"`
-	Host         string        `yaml:"host"`
-	Reset        bool          `yaml:"reset"`
-	ReconnectSec time.Duration `yaml:"reconnect_sec"`
-}
-
-func (c *DBConf) validate() (err error) {
-	if c.Host == "" {
-		err = common.ErrEmptyDBHost
-		glog.Error(err)
-		return
-	}
-
-	if c.Port <= 1024 || c.Port >= 65535 {
-		err = common.ErrInvalidDBPort
-		glog.Error(err)
-		return
-	}
-
-	if c.Username == "" {
-		err = common.ErrEmptyDBUsername
-		glog.Error(err)
-		return
-	}
-
-	if c.Password == "" {
-		err = common.ErrEmptyDBPassword
-		glog.Error(err)
-		return
-	}
-
-	if c.Database == "" {
-		err = common.ErrEmptyDBDatabase
-		glog.Error(err)
-		return
-	}
-
-	return
-}
-
-func NewPostgreSQL(conf DBConf) (db *gorm.DB, err error) {
-	db, err = gorm.Open("postgres",
-		fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=disable password=%s",
-			conf.Host,
-			conf.Port,
-			conf.Username,
-			conf.Database,
-			conf.Password))
-
-	if err != nil {
-		glog.Error(err)
-		return
-	}
-
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
-
-	return
-}
 
 func (s *Server) autoReConnectDB() (err error) {
 	for {
 		if s.DB.DB().Ping() != nil {
-			s.DB, err = NewPostgreSQL(s.Conf.DB)
+			s.DB, err = pg.NewPostgreSQL(s.Conf.DB)
 			if err != nil {
 				glog.Error(err)
 			}
