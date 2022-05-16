@@ -11,7 +11,7 @@
         "@types/spark-md5": "^3.0.2",
         "@types/xxhashjs": "^0.2.1",
         "antd": "^4.0.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "babel-plugin-import": "1.13.0",
         "customize-cra": "0.9.1",
         "echarts": "^4.6.0",
